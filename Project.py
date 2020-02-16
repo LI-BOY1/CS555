@@ -145,7 +145,7 @@ def process_line(line):
 
 
 def main():
-    file = "/Users/boyli/Desktop/Boyang Li.ged"
+    file = "/Users/boyli/Desktop/CS555-HW3/Boyang Li.ged"
 
     try:
         fp = open(file);
@@ -218,6 +218,14 @@ def main():
     print(famTable)
     print()
     print(pplTable)
+
+    famContent = famTable.get_string()
+    pplContent = pplTable.get_string()
+    with open('output.txt', 'w') as file:
+        file.write(pplContent)
+        file.write('\n')
+        file.write(famContent)
+
 
 
 
