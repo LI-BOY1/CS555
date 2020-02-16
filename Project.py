@@ -149,7 +149,7 @@ def process_line(line):
 
 
 def main():
-    file = "/Users/boyli/Desktop/CS555-HW3/P1 Qinlan Weng.ged"
+    file = "/Users/boyli/Desktop/CS555-HW3/Boyang Li.ged"
 
     try:
         fp = open(file);
