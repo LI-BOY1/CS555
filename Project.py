@@ -1,6 +1,9 @@
 import datetime
 from prettytable import PrettyTable
 
+
+# Cite: use the Project02 code from Professor's python answer
+
 personList = []
 familyList = []
 
