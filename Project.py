@@ -96,9 +96,10 @@ def process_line(line):
                     death = False
                     personList[-1].death = args
                     personList[-1].alive = False
-                else:
-                    personList[-1].death = 'NA'
-                    personList[-1].alive = True
+                #     print(personList[-1].death)
+                # else:
+                #     personList[-1].death = 'N/A'
+                #     personList[-1].alive = True
 
                 if(marry):
                     marry = False
@@ -148,7 +149,7 @@ def process_line(line):
 
 
 def main():
-    file = "/Users/boyli/Desktop/CS555-HW3/Boyang Li.ged"
+    file = "/Users/boyli/Desktop/CS555-HW3/P1 Qinlan Weng.ged"
 
     try:
         fp = open(file);
@@ -163,6 +164,13 @@ def main():
 
     now = datetime.datetime.now();
     year = now.year
+
+    for p in personList:
+        if not hasattr(p, 'death'):
+            p.death = "N/A"
+            p.alive = True
+
+
 
     # calculate the age for each person
     for p in personList:
@@ -184,6 +192,9 @@ def main():
     # sort the lists
     personList.sort(key=lambda p: p.id)
     familyList.sort(key=lambda f: f.id)
+
+
+
 
 
 
