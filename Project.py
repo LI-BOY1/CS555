@@ -1,15 +1,14 @@
 import datetime
+from prettytable import PrettyTable
 
 personList = []
 familyList = []
-
 
 flag = -1
 birth = False
 death = False
 marry = False
 div = False
-
 
 class Person():
 
@@ -94,6 +93,9 @@ def process_line(line):
                     death = False
                     personList[-1].death = args
                     personList[-1].alive = False
+                else:
+                    personList[-1].death = 'NA'
+                    personList[-1].alive = True
 
                 if(marry):
                     marry = False
@@ -143,7 +145,7 @@ def process_line(line):
 
 
 def main():
-    file = "/Users/boyli/Desktop/proj02test.ged"
+    file = "/Users/boyli/Desktop/Boyang Li.ged"
 
     try:
         fp = open(file);
@@ -176,18 +178,49 @@ def main():
             if(wifeId == p.id):
                 f.wifeName = p.name
 
+    # sort the lists
+    personList.sort(key=lambda p: p.id)
+    familyList.sort(key=lambda f: f.id)
 
 
 
+    # for p in personList:
+    #     attrs = vars(p)
+    #     print(',  '.join("%s: %s" % item for item in attrs.items()))
 
+    # for f in familyList:
+    #     attrs = vars(f)
+    #     print(',  '.join("%s: %s" % item for item in attrs.items()))
+
+
+    # create table
+    pplTable = PrettyTable(['Id', 'Child', 'Spouse', 'Name', 'Gender', 'BirthDate', 'death', 'alive', 'Age'])
+    famTable = PrettyTable(['Id', 'Married', 'divorce', 'HusbandID', 'HusbandName', 'WifeID', 'WifeName', 'Chidren'])
 
     for p in personList:
+        list = []
         attrs = vars(p)
-        print(',  '.join("%s: %s" % item for item in attrs.items()))
+        for item in attrs.items():
+            list.append(item[1])
+
+        pplTable.add_row(list)
+
 
     for f in familyList:
+        listf = []
         attrs = vars(f)
-        print(',  '.join("%s: %s" % item for item in attrs.items()))
+        for item in attrs.items():
+            listf.append(item[1])
+
+        famTable.add_row(listf)
+
+
+    print(famTable)
+    print()
+    print(pplTable)
+
+
+
 
 
 
