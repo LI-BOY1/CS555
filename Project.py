@@ -1,8 +1,20 @@
+"""
+SSW 555 Agile Methods for Software Development Project 3
+
+Team: Boyang Li, ZeYu Wu, QingLan Weng, TianCheng Xu
+
+code by @Boyang Li
+Cite: use the Project02 code from Professor's python answer
+
+"""
+
+
+
+
+
 import datetime
 from prettytable import PrettyTable
 
-
-# Cite: use the Project02 code from Professor's python answer
 
 personList = []
 familyList = []
@@ -60,9 +72,7 @@ def process_line(line):
             flag = 0
             person = Person()
 
-
             # print(f"-->{line}")
-
 
             person.id = tokens[1]
             person.child = []
@@ -72,10 +82,9 @@ def process_line(line):
             # attrs = vars(person)
             # print(',  '.join("%s: %s" % item for item in attrs.items()))
 
-
         else:
             flag = 1
-            family = Family();
+            family = Family()
             family.id = tokens[1]
             family.chidren = []
 
@@ -148,10 +157,10 @@ def process_line(line):
 
 
 def main():
-    file = "/Users/boyli/Desktop/CS555-HW3/Boyang Li.ged"
+    file = "P1 Qinlan Weng.ged"
 
     try:
-        fp = open(file);
+        fp = open(file)
     except FileNotFoundError:
         print("Can't open your ", file)
     else:
@@ -161,14 +170,28 @@ def main():
 
     global flag, birth, death, marry, div, personList, familyList
 
-    now = datetime.datetime.now();
+    now = datetime.datetime.now()
     year = now.year
 
     # calculate the age for each person
     for p in personList:
         birthdate = p.birthDate
-        birthYear = birthdate.split()[2]
-        age = year - int(birthYear)
+        """
+        fix bugs by qw
+        I have "2 DATE ABT 16 MAR 1969" lines in my .ged file which cause ValueError
+        """
+        birthdate_list = birthdate.split()
+        if len(birthdate_list) == 3:
+            birthYear = birthdate_list[2]
+        elif len(birthdate_list) == 4:
+            birthYear = birthdate_list[3]
+        else:
+            birthYear = "Not year"
+
+        try:
+            age = year - int(birthYear)
+        except ValueError:
+            p.age = None
         p.age = age
 
     #set the names
@@ -185,8 +208,6 @@ def main():
     personList.sort(key=lambda p: p.id)
     familyList.sort(key=lambda f: f.id)
 
-
-
     # for p in personList:
     #     attrs = vars(p)
     #     print(',  '.join("%s: %s" % item for item in attrs.items()))
@@ -194,7 +215,6 @@ def main():
     # for f in familyList:
     #     attrs = vars(f)
     #     print(',  '.join("%s: %s" % item for item in attrs.items()))
-
 
     # create table
     pplTable = PrettyTable(['Id', 'Child', 'Spouse', 'Name', 'Gender', 'BirthDate', 'death', 'alive', 'Age'])
@@ -228,11 +248,6 @@ def main():
         file.write(pplContent)
         file.write('\n')
         file.write(famContent)
-
-
-
-
-
 
 
 if __name__ == '__main__':
