@@ -1,11 +1,11 @@
 import datetime
 from prettytable import PrettyTable
 
-
 # Cite: use the Project02 code from Professor's python answer
 
 personList = []
 familyList = []
+sprint1output = "Sprint1Output.txt"
 
 flag = -1
 birth = False
@@ -147,19 +147,7 @@ def process_line(line):
 
     # print(f"<-- {level}|{tag}|{valid}|{args}")
 
-
-def main():
-    file = "/Users/boyli/Desktop/CS555-HW3/Boyang Li.ged"
-
-    try:
-        fp = open(file);
-    except FileNotFoundError:
-        print("Can't open your ", file)
-    else:
-        with fp:
-            for line in fp:
-                process_line(line.strip())
-
+def createTable():
     global flag, birth, death, marry, div, personList, familyList
 
     now = datetime.datetime.now();
@@ -170,8 +158,6 @@ def main():
             p.death = "N/A"
             p.alive = True
 
-
-
     # calculate the age for each person
     for p in personList:
         birthdate = p.birthDate
@@ -179,24 +165,19 @@ def main():
         age = year - int(birthYear)
         p.age = age
 
-    #set the names
+    # set the names
     for f in familyList:
         husId = f.husbandID
         wifeId = f.wifeID
         for p in personList:
-            if(husId == p.id):
+            if (husId == p.id):
                 f.husbandName = p.name
-            if(wifeId == p.id):
+            if (wifeId == p.id):
                 f.wifeName = p.name
 
     # sort the lists
     personList.sort(key=lambda p: p.id)
     familyList.sort(key=lambda f: f.id)
-
-
-
-
-
 
     # for p in personList:
     #     attrs = vars(p)
@@ -205,7 +186,6 @@ def main():
     # for f in familyList:
     #     attrs = vars(f)
     #     print(',  '.join("%s: %s" % item for item in attrs.items()))
-
 
     # create table
     pplTable = PrettyTable(['Id', 'Child', 'Spouse', 'Name', 'Gender', 'BirthDate', 'death', 'alive', 'Age'])
@@ -219,7 +199,6 @@ def main():
 
         pplTable.add_row(list)
 
-
     for f in familyList:
         listf = []
         attrs = vars(f)
@@ -227,7 +206,6 @@ def main():
             listf.append(item[1])
 
         famTable.add_row(listf)
-
 
     print(famTable)
     print()
@@ -242,6 +220,81 @@ def main():
 
 
 
+def US0405():
+
+    # for f in familyList:
+    #     attrs = vars(f)
+    #     print(',  '.join("%s: %s" % item for item in attrs.items()))
+
+    for f in familyList:
+        if f.divorce == "NA":
+            continue
+
+        # check if the marry date is before divorce date
+        divDate = datetime.datetime.strptime(f.divorce, '%d %b %Y').strftime("%Y-%m-%d");
+        marDate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
+        res = "";
+
+        if(marDate > divDate):
+            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+
+        with open(sprint1output, 'a') as file:
+            file.write(res)
+            file.write('\n')
+
+
+
+    for p in personList:
+        if p.alive == True:
+            continue
+        if p.spouse == []:
+            continue
+
+        # this person is dead and has spouse, then check if their marry date is before his/her death date
+        deathDate = datetime.datetime.strptime(p.death, '%d %b %Y').strftime("%Y-%m-%d");
+
+        for f in familyList:
+            if f.husbandID == p.id or f.wifeID == p.id:
+                marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
+                if deathDate < marrydate:
+                    with open(sprint1output, 'a') as file:
+                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        file.write(res)
+                        file.write('\n')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def main():
+    file = "/Users/boyli/Desktop/CS555/Springt01.ged"
+
+    try:
+        fp = open(file);
+    except FileNotFoundError:
+        print("Can't open your ", file)
+    else:
+        with fp:
+            for line in fp:
+                process_line(line.strip())
+
+    createTable();
+
+    # clear all the content in sprint1output.txt file
+    f = open(sprint1output, 'r+')
+    f.truncate(0)
+    US0405();
 
 
 
