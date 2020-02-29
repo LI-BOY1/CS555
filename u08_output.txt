@@ -1,0 +1,2 @@
+The data in ged_file is Right. (us08)
+The data in ged_file is Wrong. (us08)
