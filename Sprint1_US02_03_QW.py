@@ -1,11 +1,5 @@
 import datetime
 
-def birth_before_marry(birth_date, marry_date):
-    if birth_date <= marry_date:
-        return True
-    else:
-        return False
-
 
 def US02(out_file, personList, familyList):
     """
@@ -18,26 +12,20 @@ def US02(out_file, personList, familyList):
             if p.id == f.wifeID:
                 birth_date = datetime.datetime.strptime(p.birthDate, '%d %b %Y').date() 
                 marry_date = datetime.datetime.strptime(f.married, '%d %b %Y').date()
-                if birth_before_marry(birth_date, marry_date) == False:
+                if birth_date > marry_date:
                     with open(out_file, 'a') as file:
                         error_msg = "ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(birth_date) + " following marriage date " + str(marry_date)
                         file.write(error_msg)
                         file.write('\n')
 
             if p.id == f.husbandID:
-                if birth_before_marry(p.birthDate, f.married) == False:
+                birth_date = datetime.datetime.strptime(p.birthDate, '%d %b %Y').date() 
+                marry_date = datetime.datetime.strptime(f.married, '%d %b %Y').date()
+                if birth_date > marry_date:
                     with open(out_file, 'a') as file:
                         error_msg = "ERROR: FAMILY: US02: " + f.id + " Husband's birth date " + str(birth_date) + " following marriage date " + str(marry_date)
                         file.write(error_msg)
                         file.write('\n')             
-
-
-def birth_before_death(birth_date, death_date):
-    if birth_date <= death_date:
-        return True
-    else:
-        return False
-
 
 
 def US03(out_file, personList):
@@ -52,7 +40,7 @@ def US03(out_file, personList):
         
         death_date = datetime.datetime.strptime(p.death, '%d %b %Y').date()
         birth_date = datetime.datetime.strptime(p.birthDate, '%d %b %Y').date()
-        if birth_before_death(birth_date, death_date) == False:
+        if birth_date > death_date:
             with open(out_file, 'a') as file:
                 error_msg = "ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(death_date) + " before born " + str(birth_date)
                 file.write(error_msg)

@@ -23,10 +23,8 @@
 | @F6000000121265269827@ |  1 JAN 1982 |     NA     | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121265269823@ | Tomoko /Higashikata/ | ['@I6000000121263691956@'] |
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------+marriage date 1990-01-01 for family @F6000000121263060827@ is not before divorce date 1980-01-01
 marriage date 1991-04-05 for family @F6000000121260219857@ is not before death date 1990-05-02 for person @I6000000121260219852@
-ERROR: FAMILY: US02: @F6000000121262202839@ Husband's birth date 1972-03-24 following marriage date 1991-04-05
-ERROR: FAMILY: US02: @F6000000121263060827@ Husband's birth date 1942-05-25 following marriage date 1969-03-16
+ERROR: FAMILY: US02: @F6000000121260219857@ Husband's birth date 2020-02-13 following marriage date 1991-04-05
 ERROR: FAMILY: US02: @F6000000121263060827@ Wife's birth date 2000-01-01 following marriage date 1990-01-01
 ERROR: FAMILY: US02: @F6000000121263361884@ Wife's birth date 2000-01-01 following marriage date 1937-01-01
-ERROR: FAMILY: US02: @F6000000121265269827@ Husband's birth date 2000-01-01 following marriage date 1937-01-01
 ERROR: INDIVIDUAL: US03: @I6000000121260219852@ Died 1990-05-02 before born 2020-02-13
 ERROR: INDIVIDUAL: US03: @I6000000121263078869@ Died 1999-01-01 before born 2000-01-01
