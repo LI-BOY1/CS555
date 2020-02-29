@@ -1,13 +1,11 @@
 import unittest
-from us06 import us06
 import Project
-
-Project.main()
+Project.main(False)
 
 
 class TestUs06(unittest.TestCase):
     def test_us06(self):
-        self.assertEqual(us06(), "Not all divorces happen before one is dead.")
+        self.assertEqual(Project.us06(), "Not all divorces happen before one is dead.")
 
 
 if __name__ == '__main__':
