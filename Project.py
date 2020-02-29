@@ -219,7 +219,7 @@ def createTable():
         file.write(famContent)
 
 def main():
-    file = "D:/python_file/555/sprint1/q.ged"
+    file = "D:/python_file/555/sprint1/u08_test.ged"
     # file = "D:/python_file/555/sprint1/qc.ged"
     # file = "D:/python_file/555/sprint1/qcc.ged"
 
