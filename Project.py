@@ -209,13 +209,13 @@ def createTable():
 
         famTable.add_row(listf)
 
-    print(famTable)
-    print()
-    print(pplTable)
+    #print(famTable)
+    #print()
+    #print(pplTable)
 
     famContent = famTable.get_string()
     pplContent = pplTable.get_string()
-    with open('output.txt', 'w') as file:
+    with open(sprint1output, 'w') as file:
         file.write(pplContent)
         file.write('\n')
         file.write(famContent)
@@ -280,8 +280,8 @@ def main():
     createTable()
 
     # clear all the content in sprint1output.txt file
-    f = open(sprint1output, 'r+')
-    f.truncate(0)
+    #f = open(sprint1output, 'r+')
+    #f.truncate(0)
     US0405()
     
     ########### qw #############
