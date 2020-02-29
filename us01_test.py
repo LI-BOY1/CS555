@@ -1,13 +1,11 @@
 import unittest
-from us01 import us01
 import Project
-
-Project.main()
+Project.main(False)
 
 
 class TestUs01(unittest.TestCase):
     def test_us01(self):
-        self.assertEqual(us01(), "Not all dates happen before current date.")
+        self.assertEqual(Project.us01(), "Not all dates happen before current date.")
 
 
 if __name__ == '__main__':
