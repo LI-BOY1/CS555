@@ -1,23 +1,13 @@
-"""
-SSW 555 Agile Methods for Software Development Project 3
-
-Team: Boyang Li, ZeYu Wu, QingLan Weng, TianCheng Xu
-
-code by @Boyang Li
-Cite: use the Project02 code from Professor's python answer
-
-"""
-
-
-
-
-
 import datetime
 from prettytable import PrettyTable
 
+from Sprint1_US02_03_QW import US02, US03
+
+# Cite: use the Project02 code from Professor's python answer
 
 personList = []
 familyList = []
+sprint1output = "Sprint1Output.txt"
 
 flag = -1
 birth = False
@@ -72,7 +62,9 @@ def process_line(line):
             flag = 0
             person = Person()
 
+
             # print(f"-->{line}")
+
 
             person.id = tokens[1]
             person.child = []
@@ -81,6 +73,7 @@ def process_line(line):
 
             # attrs = vars(person)
             # print(',  '.join("%s: %s" % item for item in attrs.items()))
+
 
         else:
             flag = 1
@@ -105,9 +98,10 @@ def process_line(line):
                     death = False
                     personList[-1].death = args
                     personList[-1].alive = False
-                else:
-                    personList[-1].death = 'NA'
-                    personList[-1].alive = True
+                #     print(personList[-1].death)
+                # else:
+                #     personList[-1].death = 'N/A'
+                #     personList[-1].alive = True
 
                 if(marry):
                     marry = False
@@ -155,53 +149,32 @@ def process_line(line):
 
     # print(f"<-- {level}|{tag}|{valid}|{args}")
 
-
-def main():
-    file = "P1 Qinlan Weng.ged"
-
-    try:
-        fp = open(file)
-    except FileNotFoundError:
-        print("Can't open your ", file)
-    else:
-        with fp:
-            for line in fp:
-                process_line(line.strip())
-
+def createTable():
     global flag, birth, death, marry, div, personList, familyList
 
     now = datetime.datetime.now()
     year = now.year
 
+    for p in personList:
+        if not hasattr(p, 'death'):
+            p.death = "N/A"
+            p.alive = True
+
     # calculate the age for each person
     for p in personList:
         birthdate = p.birthDate
-        """
-        fix bugs by qw
-        I have "2 DATE ABT 16 MAR 1969" lines in my .ged file which cause ValueError
-        """
-        birthdate_list = birthdate.split()
-        if len(birthdate_list) == 3:
-            birthYear = birthdate_list[2]
-        elif len(birthdate_list) == 4:
-            birthYear = birthdate_list[3]
-        else:
-            birthYear = "Not year"
-
-        try:
-            age = year - int(birthYear)
-        except ValueError:
-            p.age = None
+        birthYear = birthdate.split()[2]
+        age = year - int(birthYear)
         p.age = age
 
-    #set the names
+    # set the names
     for f in familyList:
         husId = f.husbandID
         wifeId = f.wifeID
         for p in personList:
-            if(husId == p.id):
+            if (husId == p.id):
                 f.husbandName = p.name
-            if(wifeId == p.id):
+            if (wifeId == p.id):
                 f.wifeName = p.name
 
     # sort the lists
@@ -228,7 +201,6 @@ def main():
 
         pplTable.add_row(list)
 
-
     for f in familyList:
         listf = []
         attrs = vars(f)
@@ -236,7 +208,6 @@ def main():
             listf.append(item[1])
 
         famTable.add_row(listf)
-
 
     print(famTable)
     print()
@@ -250,5 +221,75 @@ def main():
         file.write(famContent)
 
 
+def US0405():
+
+    # for f in familyList:
+    #     attrs = vars(f)
+    #     print(',  '.join("%s: %s" % item for item in attrs.items()))
+
+    for f in familyList:
+        if f.divorce == "NA":
+            continue
+
+        # check if the marry date is before divorce date
+        divDate = datetime.datetime.strptime(f.divorce, '%d %b %Y').strftime("%Y-%m-%d")
+        marDate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
+        res = ""
+
+        if(marDate > divDate):
+            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+
+        with open(sprint1output, 'a') as file:
+            file.write(res)
+            file.write('\n')
+
+
+
+    for p in personList:
+        if p.alive == True:
+            continue
+        if p.spouse == []:
+            continue
+
+        # this person is dead and has spouse, then check if their marry date is before his/her death date
+        deathDate = datetime.datetime.strptime(p.death, '%d %b %Y').strftime("%Y-%m-%d")
+
+        for f in familyList:
+            if f.husbandID == p.id or f.wifeID == p.id:
+                marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
+                if deathDate < marrydate:
+                    with open(sprint1output, 'a') as file:
+                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        file.write(res)
+                        file.write('\n')
+
+
+def main():
+    
+    file = "Springt01 US02_03.ged"
+
+    try:
+        fp = open(file)
+    except FileNotFoundError:
+        print("Can't open your ", file)
+    else:
+        with fp:
+            for line in fp:
+                process_line(line.strip())
+
+    createTable()
+
+    # clear all the content in sprint1output.txt file
+    f = open(sprint1output, 'r+')
+    f.truncate(0)
+    US0405()
+    
+    ########### qw #############
+    US02(sprint1output, personList, familyList)
+    US03(sprint1output, personList)
+    ########### qw #############
+
+
 if __name__ == '__main__':
+
     main()
