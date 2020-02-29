@@ -29,15 +29,14 @@ def us07():
                 flag = False
 
     if flag:
-        check = 'Correct'
+        return 'Correct'
     else:
-        check = 'Error'
-    print(check)
+        return 'Error'
 
 
 def main():
     Project.main()
-    us07()
+    print(us07())
 
 if __name__ == "__main__":
     main()

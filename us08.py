@@ -17,6 +17,7 @@ def us08():
             if Project.familyList[i].id == ky:
                 married_date = datetime.strptime(datetime.strptime(Project.familyList[i].married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
                 if married_date > birth_date:
+                    print(f"ERROR: INDIVIDUAL: US07: {person.id}: both before marriage")
                     flag = False
                     
                 divorce = Project.familyList[i].divorce
@@ -25,11 +26,12 @@ def us08():
                     dif_time = ((birth_date - divorce_date).days/365.25) * 12
                     # print(dif_time)
                     if dif_time > 9:
+                        print(f"ERROR: INDIVIDUAL: US07: {person.id}: both before marriage")
                         flag = False
     if flag:
-        return "The data in ged_file is Right. (us08)"
+        return "Correct"
     else:
-        return "The data in ged_file is Wrong. (us08)"
+        return "Error"
 
 def main():
     Project.main()

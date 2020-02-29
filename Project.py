@@ -207,9 +207,9 @@ def createTable():
 
         famTable.add_row(listf)
 
-    print(famTable)
-    print()
-    print(pplTable)
+    # print(famTable)
+    # print()
+    # print(pplTable)
 
     famContent = famTable.get_string()
     pplContent = pplTable.get_string()
@@ -218,10 +218,70 @@ def createTable():
         file.write('\n')
         file.write(famContent)
 
+
+
+def US0405():
+
+    # for f in familyList:
+    #     attrs = vars(f)
+    #     print(',  '.join("%s: %s" % item for item in attrs.items()))
+
+    for f in familyList:
+        if f.divorce == "NA":
+            continue
+
+        # check if the marry date is before divorce date
+        divDate = datetime.datetime.strptime(f.divorce, '%d %b %Y').strftime("%Y-%m-%d");
+        marDate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
+        res = "";
+
+        if(marDate > divDate):
+            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+
+        with open(sprint1output, 'a') as file:
+            file.write(res)
+            file.write('\n')
+
+
+
+    for p in personList:
+        if p.alive == True:
+            continue
+        if p.spouse == []:
+            continue
+
+        # this person is dead and has spouse, then check if their marry date is before his/her death date
+        deathDate = datetime.datetime.strptime(p.death, '%d %b %Y').strftime("%Y-%m-%d");
+
+        for f in familyList:
+            if f.husbandID == p.id or f.wifeID == p.id:
+                marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
+                if deathDate < marrydate:
+                    with open(sprint1output, 'a') as file:
+                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        file.write(res)
+                        file.write('\n')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def main():
-    file = "D:/python_file/555/sprint1/u08_test.ged"
-    # file = "D:/python_file/555/sprint1/qc.ged"
-    # file = "D:/python_file/555/sprint1/qcc.ged"
+    file = "D:/python_file/555/sprint1/Qinlan Weng.ged"
+    # file = "D:/python_file/555/sprint1/u07_test.ged"
+    # file = "D:/python_file/555/sprint1/u08_test.ged"
+
 
     try:
         fp = open(file);
@@ -231,6 +291,15 @@ def main():
         with fp:
             for line in fp:
                 process_line(line.strip())
+
+    createTable();
+
+    # # clear all the content in sprint1output.txt file
+    # f = open(sprint1output, 'r+')
+    # f.truncate(0)
+    # US0405();
+
+
 
 
 if __name__ == '__main__':
