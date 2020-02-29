@@ -1,2 +1,2 @@
-Mary /Sue/ was born after current date. BirthDate: 2022-03-24, Current date: 2020-02-28
+ERROR: INDIVIDUAL: US01: @I6000000121260586821@: Birthday 2022-03-24 occurs in the future
 Not all dates happen before current date.
