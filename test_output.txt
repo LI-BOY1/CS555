@@ -1,0 +1,2 @@
+ERROR: FAMILY: US02: F01 Wife's birth date 2021-09-29 following marriage date 1993-09-29
+ERROR: INDIVIDUAL: US03: I01 Died 2020-01-23 before born 2021-09-29
