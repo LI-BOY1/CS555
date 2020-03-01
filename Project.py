@@ -220,7 +220,7 @@ def createTable():
 
 
 
-def US0405():
+def US0405(familyList, personList, sprint1output):
 
     # for f in familyList:
     #     attrs = vars(f)
@@ -236,7 +236,7 @@ def US0405():
         res = "";
 
         if(marDate > divDate):
-            res = "ERROR: FAMILY: US04" + "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+            res = "ERROR: FAMILY: US04 " + "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
 
         with open(sprint1output, 'a') as file:
             file.write(res)
@@ -258,7 +258,7 @@ def US0405():
                 marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
                 if deathDate < marrydate:
                     with open(sprint1output, 'a') as file:
-                        res = "ERROR: FAMILY: US04" + "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        res = "ERROR: FAMILY: US04 " + "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
                         file.write(res)
                         file.write('\n')
 
@@ -294,7 +294,7 @@ def main():
     # clear all the content in sprint1output.txt file
     f = open(sprint1output, 'r+')
     f.truncate(0)
-    US0405();
+    US0405(familyList, personList, sprint1output)
 
 
 
