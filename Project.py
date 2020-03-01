@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 personList = []
 familyList = []
-sprint1output = "Sprint1Output.txt"
+sprint1output = "Sprint1US0405Output.txt"
 
 flag = -1
 birth = False
@@ -236,7 +236,7 @@ def US0405():
         res = "";
 
         if(marDate > divDate):
-            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+            res = "ERROR: FAMILY: US04" + "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
 
         with open(sprint1output, 'a') as file:
             file.write(res)
@@ -258,7 +258,7 @@ def US0405():
                 marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d");
                 if deathDate < marrydate:
                     with open(sprint1output, 'a') as file:
-                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        res = "ERROR: FAMILY: US04" + "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
                         file.write(res)
                         file.write('\n')
 

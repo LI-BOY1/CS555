@@ -1,0 +1,2 @@
+ERROR: FAMILY: US04marriage date 1990-01-01 for family @F6000000121263060827@ is not before divorce date 1980-01-01
+ERROR: FAMILY: US04marriage date 1991-04-05 for family @F6000000121260219857@ is not before death date 1990-05-02 for person @I6000000121260219852@
