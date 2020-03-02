@@ -219,6 +219,7 @@ def createTable():
         file.write(pplContent)
         file.write('\n')
         file.write(famContent)
+        file.write('\n')
 
 
 def US0405():
@@ -282,7 +283,7 @@ def main():
     # clear all the content in sprint1output.txt file
     #f = open(sprint1output, 'r+')
     #f.truncate(0)
-    US0405()
+    #US0405()
     
     ########### qw #############
     US02(sprint1output, personList, familyList)
