@@ -353,11 +353,8 @@ def US0405():
         res = ""
 
         if(marDate > divDate):
-            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+            print("marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate)
 
-        with open(sprint1output, 'a') as file:
-            file.write(res)
-            file.write('\n')
 
 
     for p in personList:
@@ -373,10 +370,8 @@ def US0405():
             if f.husbandID == p.id or f.wifeID == p.id:
                 marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
                 if deathDate < marrydate:
-                    with open(sprint1output, 'a') as file:
-                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
-                        file.write(res)
-                        file.write('\n')
+                    print("marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id)
+
 
 
 
@@ -392,7 +387,7 @@ def US0405():
 def main():
     
     #prepare data
-    gedcom_file = "Springt01 US02_03.ged"
+    gedcom_file = "Springt01.ged"
 
     try:
         fp = open(gedcom_file)
