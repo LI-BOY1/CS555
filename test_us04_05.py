@@ -3,8 +3,8 @@
 
 import datetime
 import unittest
-from Project import US0405
-from Project import Person, Family
+
+from SSW555_project import Person, Family, US0405
 
 
 class Test_US0405(unittest.TestCase):
@@ -60,7 +60,7 @@ class Test_US0405(unittest.TestCase):
         person_list = [test_person1, test_person2]
         family_list = [test_family1, test_family2]
 
-        self.assertEqual(US0405(family_list, person_list, fileName), None)
+        self.assertEqual(US0405(family_list, person_list), None)
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)

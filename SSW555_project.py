@@ -6,10 +6,10 @@ Team member: Tianchen Xu, Qinlan Weng, Boyang, Li, Zeyu Wu
 
 Sprint1 finish
 US01 author @zw
-US02 author @
+US02 author @qw
 US03 author @qw
-US04 author @
-US05 author @
+US04 author @bl
+US05 author @bl
 US06 author @zw
 US07 author @tx
 US08 author @tx
@@ -285,8 +285,19 @@ def US02(personList, familyList, print_flag=True):
                 if compare_date(p.birthDate, f.married) == 1:
                     error += 1
                     if print_flag:
-                        print("ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(
-                            str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
+
+                        res = "ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(
+                              str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married))
+
+                        print(res)
+
+                        with open(sprint1output, 'w') as file:
+                            file.write(res)
+                            file.write('\n')
+
+
+                        # print("ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(
+                        #     str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
 
             if p.id == f.husbandID:
                 if compare_date(p.birthDate, f.married) == 1:
@@ -321,8 +332,15 @@ def US03(personList, print_flag=True):
         if compare_date(p.birthDate, p.death) == 1:
             error += 1
             if print_flag:
-                print("ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(
-                    str_to_date(p.birthDate)))
+
+                res = "ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(
+                    str_to_date(p.birthDate))
+
+                print(res)
+
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
 
     return error
 
@@ -335,7 +353,7 @@ def US03(personList, print_flag=True):
 ###############################################
 
 
-def US0405():
+def US0405(familyList, personList):
     # for f in familyList:
     #     attrs = vars(f)
     #     print(',  '.join("%s: %s" % item for item in attrs.items()))
@@ -350,7 +368,9 @@ def US0405():
         res = ""
 
         if (marDate > divDate):
-            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+            res = "ERROR: FAMILY: US04: marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
+
+        print(res);
 
         with open(sprint1output, 'a') as file:
             file.write(res)
@@ -370,7 +390,8 @@ def US0405():
                 marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
                 if deathDate < marrydate:
                     with open(sprint1output, 'a') as file:
-                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        res = "ERROR: FAMILY: US05: marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        print(res)
                         file.write(res)
                         file.write('\n')
 
@@ -389,24 +410,43 @@ def us01(personList, familyList):
     for person in personList:
         birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
         if person.birthDate is not None and birth_date > datetime.datetime.now().date():
-            print(f"ERROR: INDIVIDUAL: US01: {person.id}: Birthday {birth_date} occurs in the future")
+            res = "ERROR: INDIVIDUAL: US01: " + person.id + ": Birthday " + str(birth_date) + " occurs in the future"
+            print(res)
+            with open(sprint1output, 'a') as file:
+                file.write(res)
+                file.write('\n')
+
             verify = False
         if person.death != 'N/A':
             death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if death > current_time:
-                print(f"ERROR: INDIVIDUAL: US01: {person.id}: death {death} occurs in the future")
+                res = "ERROR: INDIVIDUAL: US01: " + person.id + ": death " + str(death) + " occurs in the future"
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 verify = False
 
     for family_member in familyList:
         if family_member.married != 'N/A':
             marry_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if marry_date > current_time:
-                print(f"ERROR: FAMILY: US01: {family_member.husbandName} and {family_member.wifeName} marry at {marry_date}, in the future")
+                res = "ERROR: FAMILY: US01: "+ family_member.husbandName + " and " + family_member.wifeName + " marry at " + str(marry_date) + ", in the future"
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
                 verify = False
         if family_member.divorce != 'NA':
             divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > current_time:
-                print(f"ERROR: FAMILY: US01: {family_member.husbandName} and {family_member.wifeName} divorce at {divorce_date}, in the future")
+                res = "ERROR: FAMILY: US01: " + family_member.husbandName + " and " + family_member.wifeName + " divorce at " + str(divorce_date) + ", in the future"
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 verify = False
     if verify:
         return "All dates happen before current date."
@@ -435,10 +475,20 @@ def us06(personList, familyList):
                     if personList[i].death != 'N/A':
                         wife_death = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > husband_death:
-                print(f"ERROR: FAMILY: US06: {family.id}: Divorced {divorce_date} after husband's ({family.husbandID}) death on {husband_death}")
+                res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after husband's (" + family.husbandID + ") death on " + str(husband_death)
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 verify = False
             if divorce_date > wife_death:
-                print(f"ERROR: FAMILY: US06: {family.id}: Divorced {divorce_date} after wife's ({family.wifeID}) death on {wife_death}")
+                res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after wife's (" + family.wifeID + ") death on " + str(wife_death)
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 verify = False
     if verify:
         return "All divorces happen before one is dead."
@@ -470,14 +520,24 @@ def us07(personList, familyList):
             birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             div_time = (death_date - birth_date).days/365.25
             if div_time > 150:
-                print(f"ERROR: INDIVIDUAL: US07: {person.id}: more than 150 years old")
+                res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 flag = False
         else:
             # get birth
             birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             div_time = (date_now - birth_date).days/365.25
             if div_time > 150:
-                print(f"ERROR: INDIVIDUAL: US07: {person.id}: more than 150 years old")
+                res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
+                print(res)
+                with open(sprint1output, 'a') as file:
+                    file.write(res)
+                    file.write('\n')
+
                 flag = False
     if flag:
         return 'Correct'
@@ -507,7 +567,11 @@ def us08(personList, familyList):
             if familyList[i].id == ky:
                 married_date = datetime.datetime.strptime(datetime.datetime.strptime(familyList[i].married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
                 if married_date > birth_date:
-                    print(f"ERROR: INDIVIDUAL: US08: {person.id}: birth before marriage")
+                    res = "ERROR: INDIVIDUAL: US08: " + person.id + ": birth before marriage"
+                    print(res)
+                    with open(sprint1output, 'a') as file:
+                        file.write(res)
+                        file.write('\n')
                     flag = False
                     
                 divorce = familyList[i].divorce
@@ -516,7 +580,11 @@ def us08(personList, familyList):
                     dif_time = ((birth_date - divorce_date).days/365.25) * 12
                     # print(dif_time)
                     if dif_time > 9:
-                        print(f"ERROR: INDIVIDUAL: US08: {person.id}: birth before marriage")
+                        res = "ERROR: INDIVIDUAL: US08: " + person.id + ": birth before marriage"
+                        print(res)
+                        with open(sprint1output, 'a') as file:
+                            file.write(res)
+                            file.write('\n')
                         flag = False
     if flag:
         return "Correct"
@@ -549,7 +617,7 @@ def main():
 
     US02(personList, familyList)
     US03(personList)
-    US0405()
+    US0405(familyList, personList)
     us01(personList, familyList)
     us06(personList, familyList)
     us07(personList, familyList)
