@@ -11,8 +11,8 @@ US03 author @qw
 US04 author @
 US05 author @
 US06 author @zw
-US07 author @
-US08 author @
+US07 author @tx
+US08 author @tx
 
 Sprint Coding
 
@@ -445,6 +445,83 @@ def us06(personList, familyList):
     else:
         return "Not all divorces happen before one is dead."
 
+    
+###############################################
+#                                             #
+#                 US 07                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us07(personList, familyList):
+    # Less then 150 years old
+    """
+    Death less than 150 years after birth for dead people
+    current date less than 150 years after birth for all living people
+    """
+    flag = True
+    date_now = datetime.datetime.now().date()
+    for person in personList:
+        #check dead people
+        if person.alive == False:
+            # get death
+            death_date = datetime.datetime.strptime(datetime.datetime.strptime(person.death,'%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            # get birth
+            birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            div_time = (death_date - birth_date).days/365.25
+            if div_time > 150:
+                print(f"ERROR: INDIVIDUAL: US07: {person.id}: more than 150 years old")
+                flag = False
+        else:
+            # get birth
+            birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            div_time = (date_now - birth_date).days/365.25
+            if div_time > 150:
+                print(f"ERROR: INDIVIDUAL: US07: {person.id}: more than 150 years old")
+                flag = False
+    if flag:
+        return 'Correct'
+    else:
+        return 'Error'
+
+
+###############################################
+#                                             #
+#                 US 08                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us08(personList, familyList):
+    # Birth before marriage of parents
+    """
+    Children should be born after marriage of parents 
+    (and not more than 9 months after their divorce)
+    """
+    flag = True
+    for person in personList:
+        key = person.child
+        ky = "".join(key)
+        birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+        for i in range(len(familyList)):
+            if familyList[i].id == ky:
+                married_date = datetime.datetime.strptime(datetime.datetime.strptime(familyList[i].married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                if married_date > birth_date:
+                    print(f"ERROR: INDIVIDUAL: US08: {person.id}: birth before marriage")
+                    flag = False
+                    
+                divorce = familyList[i].divorce
+                if divorce != 'NA':
+                    divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(familyList[i].divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                    dif_time = ((birth_date - divorce_date).days/365.25) * 12
+                    # print(dif_time)
+                    if dif_time > 9:
+                        print(f"ERROR: INDIVIDUAL: US08: {person.id}: birth before marriage")
+                        flag = False
+    if flag:
+        return "Correct"
+    else:
+        return "Error"   
 ###############################################
 #                                             #
 #                 main                        #
@@ -475,6 +552,8 @@ def main():
     US0405()
     us01(personList, familyList)
     us06(personList, familyList)
+    us07(personList, familyList)
+    us08(personList, familyList)
 
 
 if __name__ == '__main__':
