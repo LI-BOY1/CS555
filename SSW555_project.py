@@ -5,20 +5,18 @@ All user stories will be included in this file.
 Team member: Tianchen Xu, Qinlan Weng, Boyang, Li, Zeyu Wu
 
 Sprint1 finish
-US01 author @
-US02 author @qw
+US01 author @zw
+US02 author @
 US03 author @qw
 US04 author @
 US05 author @
-US06 author @
+US06 author @zw
 US07 author @
 US08 author @
 
 Sprint Coding
 
 """
-
-
 
 import datetime
 from prettytable import PrettyTable
@@ -42,7 +40,8 @@ death = False
 marry = False
 div = False
 
-class Person():
+
+class Person:
 
     def _init_(self):
         self.id = ''
@@ -55,7 +54,8 @@ class Person():
         self.child = []
         self.spouse = []
 
-class Family():
+
+class Family:
 
     def __init__(self):
         self.id = ''
@@ -69,7 +69,6 @@ class Family():
 
 
 def process_line(line):
-
     global flag, birth, death, marry, div, personList, familyList
     valid_tages = {
         '0': ('HEAD', 'NOTE', 'TRLR'),
@@ -84,7 +83,7 @@ def process_line(line):
         level, args, tag = tokens
         valid = 'Y'
 
-        #set the person flag
+        # set the person flag
         if tokens[2] == 'INDI':
             flag = 0
             person = Person()
@@ -110,14 +109,14 @@ def process_line(line):
         level, tag, args = tokens[0], tokens[1], " ".join(tokens[2:])
         valid = 'Y' if level in valid_tages and tag in valid_tages[level] else 'N'
 
-        if(valid == 'Y'):
+        if valid == 'Y':
 
-            if(level == "2"):
-                if(birth):
+            if level == "2":
+                if (birth):
                     birth = False
                     personList[-1].birthDate = args
 
-                if(death):
+                if death:
                     death = False
                     personList[-1].death = args
                     personList[-1].alive = False
@@ -126,16 +125,16 @@ def process_line(line):
                 #     personList[-1].death = 'N/A'
                 #     personList[-1].alive = True
 
-                if(marry):
+                if marry:
                     marry = False
                     familyList[-1].married = args
 
-                if(div):
+                if div:
                     div = False
                     familyList[-1].divorce = args
 
             # deal with person
-            if(flag == 0):
+            if flag == 0:
                 if tokens[1] == "NAME":
                     personList[-1].name = args
                 elif tokens[1] == "SEX":
@@ -143,7 +142,7 @@ def process_line(line):
                 elif tokens[1] == "BIRT":
 
                     birth = True
-                elif tokens[1] ==  "DEAT":
+                elif tokens[1] == "DEAT":
 
                     death = True
                 elif tokens[1] == "FAMC":
@@ -151,20 +150,20 @@ def process_line(line):
 
                 elif tokens[1] == "FAMS":
                     personList[-1].spouse.append(args)
-            
+
             # deal wiht family
             else:
-                if(tokens[1] == "MARR"):
+                if tokens[1] == "MARR":
 
                     marry = True
-                elif (tokens[1] == "DIV"):
+                elif tokens[1] == "DIV":
 
                     div = True
-                elif ( tokens[1] == "HUSB"):
+                elif tokens[1] == "HUSB":
                     familyList[-1].husbandID = args
-                elif (tokens[1] == "WIFE"):
+                elif tokens[1] == "WIFE":
                     familyList[-1].wifeID = args
-                elif (tokens[1] == "CHIL"):
+                elif tokens[1] == "CHIL":
                     familyList[-1].chidren.append(args)
 
     else:
@@ -196,9 +195,9 @@ def createTable():
         husId = f.husbandID
         wifeId = f.wifeID
         for p in personList:
-            if (husId == p.id):
+            if husId == p.id:
                 f.husbandName = p.name
-            if (wifeId == p.id):
+            if wifeId == p.id:
                 f.wifeName = p.name
 
     # sort the lists
@@ -236,11 +235,10 @@ def createTable():
     print(famTable)
     print()
     print(pplTable)
-    #print()
+    # print()
 
-    #famContent = famTable.get_string()
-    #pplContent = pplTable.get_string()
-
+    # famContent = famTable.get_string()
+    # pplContent = pplTable.get_string()
 
 
 ###################### Parser end #########################
@@ -253,8 +251,10 @@ def createTable():
 #                                             #
 ###############################################
 
+
 def str_to_date(str_date):
     return datetime.datetime.strptime(str_date, '%d %b %Y').date()
+
 
 def compare_date(date1, date2):
     """
@@ -285,15 +285,17 @@ def US02(personList, familyList, print_flag=True):
                 if compare_date(p.birthDate, f.married) == 1:
                     error += 1
                     if print_flag:
-                        print("ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
+                        print("ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(
+                            str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
 
             if p.id == f.husbandID:
                 if compare_date(p.birthDate, f.married) == 1:
                     error += 1
                     if print_flag:
-                            print("ERROR: FAMILY: US02: " + f.id + " Husband's birth date " + str(str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
-                            
-    return error   
+                        print("ERROR: FAMILY: US02: " + f.id + " Husband's birth date " + str(
+                            str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
+
+    return error
 
 
 ###############################################
@@ -319,14 +321,10 @@ def US03(personList, print_flag=True):
         if compare_date(p.birthDate, p.death) == 1:
             error += 1
             if print_flag:
-                print("ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(str_to_date(p.birthDate)))
+                print("ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(
+                    str_to_date(p.birthDate)))
 
-    return error   
-
-
-
-
-
+    return error
 
 
 ###############################################
@@ -338,7 +336,6 @@ def US03(personList, print_flag=True):
 
 
 def US0405():
-
     # for f in familyList:
     #     attrs = vars(f)
     #     print(',  '.join("%s: %s" % item for item in attrs.items()))
@@ -352,10 +349,12 @@ def US0405():
         marDate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
         res = ""
 
-        if(marDate > divDate):
-            print("marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate)
+        if (marDate > divDate):
+            res = "marriage date " + marDate + " for family " + f.id + " is not before divorce date " + divDate
 
-
+        with open(sprint1output, 'a') as file:
+            file.write(res)
+            file.write('\n')
 
     for p in personList:
         if p.alive == True:
@@ -370,11 +369,81 @@ def US0405():
             if f.husbandID == p.id or f.wifeID == p.id:
                 marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
                 if deathDate < marrydate:
-                    print("marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id)
+                    with open(sprint1output, 'a') as file:
+                        res = "marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                        file.write(res)
+                        file.write('\n')
+
+###############################################
+#                                             #
+#                 US 01                       #
+#                 author @zw                  #
+#                                             #
+###############################################
 
 
+def us01(personList, familyList):
+    """ Dates (birth, marriage, divorce, death) should not be after the current date """
+    verify = True
+    current_time = datetime.datetime.now().date()
+    for person in personList:
+        birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+        if person.birthDate is not None and birth_date > datetime.datetime.now().date():
+            print(f"ERROR: INDIVIDUAL: US01: {person.id}: Birthday {birth_date} occurs in the future")
+            verify = False
+        if person.death != 'N/A':
+            death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            if death > current_time:
+                print(f"ERROR: INDIVIDUAL: US01: {person.id}: death {death} occurs in the future")
+                verify = False
+
+    for family_member in familyList:
+        if family_member.married != 'N/A':
+            marry_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            if marry_date > current_time:
+                print(f"ERROR: FAMILY: US01: {family_member.husbandName} and {family_member.wifeName} marry at {marry_date}, in the future")
+                verify = False
+        if family_member.divorce != 'NA':
+            divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            if divorce_date > current_time:
+                print(f"ERROR: FAMILY: US01: {family_member.husbandName} and {family_member.wifeName} divorce at {divorce_date}, in the future")
+                verify = False
+    if verify:
+        return "All dates happen before current date."
+    else:
+        return "Not all dates happen before current date."
+
+###############################################
+#                                             #
+#                 US 06                       #
+#                 author @zw                  #
+#                                             #
+###############################################
 
 
+def us06(personList, familyList):
+    """  Divorce can only occur before death of both spouses """
+    verify = True
+    for family in familyList:
+        if family.divorce != 'NA':
+            divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(family.divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            for i in range(len(personList)):
+                if personList[i].id == family.husbandID:
+                    if personList[i].death != 'N/A':
+                        husband_death = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                if personList[i].id == family.wifeID:
+                    if personList[i].death != 'N/A':
+                        wife_death = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            if divorce_date > husband_death:
+                print(f"ERROR: FAMILY: {family.id}: Divorced {divorce_date} after husband's ({family.husbandID}) death on {husband_death}")
+                verify = False
+            if divorce_date > wife_death:
+                print(f"ERROR: FAMILY: {family.id}: Divorced {divorce_date} after wife's ({family.wifeID}) death on {wife_death}")
+                verify = False
+    if verify:
+        return "All divorces happen before one is dead."
+    else:
+        return "Not all divorces happen before one is dead."
 
 ###############################################
 #                                             #
@@ -385,9 +454,8 @@ def US0405():
 
 
 def main():
-    
-    #prepare data
-    gedcom_file = "Springt01.ged"
+    # prepare data
+    gedcom_file = "us01_test.ged"
 
     try:
         fp = open(gedcom_file)
@@ -400,11 +468,13 @@ def main():
 
     createTable()
 
-    #sprint1
+    # sprint1
 
     US02(personList, familyList)
-    US03(personList)    
+    US03(personList)
     US0405()
+    us01(personList, familyList)
+    us06(personList, familyList)
 
 
 if __name__ == '__main__':
