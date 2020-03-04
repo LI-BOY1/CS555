@@ -1,2 +1,0 @@
-ERROR: INDIVIDUAL: US01: @I6000000121260586821@: Birthday 2022-03-24 occurs in the future
-Not all dates happen before current date.
