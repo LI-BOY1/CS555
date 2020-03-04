@@ -435,10 +435,10 @@ def us06(personList, familyList):
                     if personList[i].death != 'N/A':
                         wife_death = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > husband_death:
-                print(f"ERROR: FAMILY: {family.id}: Divorced {divorce_date} after husband's ({family.husbandID}) death on {husband_death}")
+                print(f"ERROR: FAMILY: US06: {family.id}: Divorced {divorce_date} after husband's ({family.husbandID}) death on {husband_death}")
                 verify = False
             if divorce_date > wife_death:
-                print(f"ERROR: FAMILY: {family.id}: Divorced {divorce_date} after wife's ({family.wifeID}) death on {wife_death}")
+                print(f"ERROR: FAMILY: US06: {family.id}: Divorced {divorce_date} after wife's ({family.wifeID}) death on {wife_death}")
                 verify = False
     if verify:
         return "All divorces happen before one is dead."
@@ -455,10 +455,10 @@ def us06(personList, familyList):
 
 def main():
     # prepare data
-    gedcom_file = "us01_test.ged"
+    gedcom_file = "Sprint01.ged"
 
     try:
-        fp = open(gedcom_file)
+        fp = open(gedcom_file, encoding='UTF-8')
     except FileNotFoundError:
         print("Can't open your ", gedcom_file)
     else:
