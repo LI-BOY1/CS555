@@ -455,7 +455,7 @@ def us06(personList, familyList):
 
 def main():
     # prepare data
-    gedcom_file = "Springt01.ged"
+    gedcom_file = "Sprint01.ged"
 
     try:
         fp = open(gedcom_file, encoding='UTF-8')
