@@ -1,12 +1,11 @@
 """
 by qw
-Test for Sprint1_US02_03
+Test for Sprint1 US02 03
 """
 
 import datetime
 import unittest
-from Sprint1_US02_03_QW import US02, US03
-from Project import Person, Family
+from SSW555_project import Person, Family, US02, US03
 
 class Test_US02_03(unittest.TestCase):
     
@@ -47,16 +46,16 @@ class Test_US02_03(unittest.TestCase):
         person_list = [test_person1, test_person2]
         family_list = [test_family]
 
-        self.assertEqual(US02("test_output.txt", person_list, family_list, False), 0)
-        self.assertEqual(US03("test_output.txt", person_list, False), 0)
+        self.assertEqual(US02(person_list, family_list, False), 0)
+        self.assertEqual(US03(person_list, False), 0)
         
         person_list[0].birthDate = "29 SEP 2021"
-        self.assertEqual(US02("test_output.txt", person_list, family_list, False), 1)
-        self.assertEqual(US03("test_output.txt", person_list, False), 1)
+        self.assertEqual(US02(person_list, family_list, False), 1)
+        self.assertEqual(US03(person_list, False), 1)
                 
         person_list[1].birthDate = "29 SEP 2021"
-        self.assertEqual(US02("test_output.txt", person_list, family_list, False), 2)
-        self.assertEqual(US03("test_output.txt", person_list, False), 2)
+        self.assertEqual(US02(person_list, family_list, False), 2)
+        self.assertEqual(US03(person_list, False), 2)
 
 
 if __name__ == '__main__':
