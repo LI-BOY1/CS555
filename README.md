@@ -6,8 +6,8 @@ Test_Sprint1_US02_03_QW.py: all unittest file follow this format
 
 Springt01.ged: gedcom file with all errors in sprint1. currently it only have US02 03 errors
 
-
 other files are not relevant.
 
-
 todo: setting travis
+
+---03/04/2020
