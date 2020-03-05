@@ -240,6 +240,13 @@ def createTable():
     # famContent = famTable.get_string()
     # pplContent = pplTable.get_string()
 
+    famContent = famTable.get_string()
+    pplContent = pplTable.get_string()
+    with open(sprint1output, 'w') as file:
+        file.write(pplContent)
+        file.write('\n')
+        file.write(famContent)
+
 
 ###################### Parser end #########################
 
@@ -291,7 +298,7 @@ def US02(personList, familyList, print_flag=True):
 
                         print(res)
 
-                        with open(sprint1output, 'w') as file:
+                        with open(sprint1output, 'a') as file:
                             file.write(res)
                             file.write('\n')
 
