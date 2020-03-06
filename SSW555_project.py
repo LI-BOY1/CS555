@@ -662,11 +662,11 @@ def us16(personList, familyList):
             for children in family.chidren:
                 for person in personList:
                     if person.id == children:
-                        if person.gender == 'F':
+                        if person.gender == 'M':
                             children_ltnm[person.id] = person.name.split('/')[1]
             for child in children_ltnm.keys():
-                if child != father_ltnm:
-                    print(f"ERROR: FAMILY: US16: {child}'s last name is different from father's. Child's last name: {children_ltnm[child]}, father's last name: {father_ltnm}")
+                if children_ltnm[child] != father_ltnm:
+                    print(f"ERROR: FAMILY: US16: {child}'s last name is different from father's. Child's last name: {children_ltnm[child]}, father's last name: {father_ltnm}.")
                     verify = False
     if verify:
         return "All male members of a family have the same last name"
