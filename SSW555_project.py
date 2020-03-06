@@ -246,6 +246,10 @@ def createTable():
         file.write(pplContent)
         file.write('\n')
         file.write(famContent)
+        file.write('\n')
+
+
+
 
 
 ###################### Parser end #########################
@@ -302,16 +306,16 @@ def US02(personList, familyList, print_flag=True):
                             file.write(res)
                             file.write('\n')
 
-
-                        # print("ERROR: FAMILY: US02: " + f.id + " Wife's birth date " + str(
-                        #     str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
-
             if p.id == f.husbandID:
                 if compare_date(p.birthDate, f.married) == 1:
                     error += 1
                     if print_flag:
-                        print("ERROR: FAMILY: US02: " + f.id + " Husband's birth date " + str(
-                            str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married)))
+                        res = "ERROR: FAMILY: US02: " + f.id + " Husband's birth date " + str(
+                            str_to_date(p.birthDate)) + " following marriage date " + str(str_to_date(f.married))
+                        print(res)
+                        with open(sprint1output, 'a') as file:
+                            file.write(res)
+                            file.write('\n')
 
     return error
 
