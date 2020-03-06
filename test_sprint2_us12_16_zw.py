@@ -9,7 +9,7 @@ class TestUs1216(unittest.TestCase):
         father = Person()
         father.id = "I01"
         father.name = "Jotaro /Kujo/"
-        father.gender = "F"
+        father.gender = "M"
         father.birthDate = "29 SEP 1918"
         father.age = 101
         father.alive = True
@@ -20,7 +20,7 @@ class TestUs1216(unittest.TestCase):
         mother = Person()
         mother.id = "I02"
         mother.name = "Marry Sue"
-        mother.gender = "M"
+        mother.gender = "F"
         mother.birthDate = "12 Jan 1988"
         mother.age = 80
         mother.alive = False
@@ -30,8 +30,8 @@ class TestUs1216(unittest.TestCase):
 
         child = Person()
         child.id = "I03"
-        child.name = "Jolyne /Kujo/"
-        child.gender = "F"
+        child.name = "Jolyne /Cujoh/"
+        child.gender = "M"
         child.birthDate = "12 Jan 2002"
         child.age = 18
         child.alive = True
