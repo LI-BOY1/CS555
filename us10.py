@@ -3,7 +3,7 @@ def us10(personList, familyList):
     """Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)"""
     flag = True
     for person in personList:
-        if person.spouse != "":
+        if person.spouse != []:
             if person.age < 14:
                 res = "ERROR: INDIVIDUAL: US10: " + person.id + ": Marriage after 14"
                 print(res)
