@@ -682,7 +682,7 @@ def us16(personList, familyList):
 
 def main():
     # prepare data
-    gedcom_file = "Qinlan Weng.ged"
+    gedcom_file = "sprint02.ged"
 
     try:
         fp = open(gedcom_file, encoding='UTF-8')
