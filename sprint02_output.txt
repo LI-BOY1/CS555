@@ -35,3 +35,15 @@ ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
 ERROR: FAMILY: US15: family @F6000000121263060827@ has 15 children
 ERROR: FAMILY: US18: In family @F6000000121263060827@ Chird c3 marries his sibling c2
+ERROR: FAMILY: US04: marriage date 1990-09-29 for family F0001 is not before divorce date 1988-09-29
+ERROR: FAMILY: US05: marriage date 2021-01-23 for family F0002 is not before death date 2020-01-23 for person P0003
+ERROR: FAMILY: US02: F01 Wife's birth date 2021-09-29 following marriage date 1993-09-29
+ERROR: INDIVIDUAL: US03: I01 Died 2020-01-23 before born 2021-09-29
+ERROR: FAMILY: US02: F01 Wife's birth date 2021-09-29 following marriage date 1993-09-29
+ERROR: FAMILY: US02: F01 Husband's birth date 2021-09-29 following marriage date 1993-09-29
+ERROR: INDIVIDUAL: US03: I01 Died 2020-01-23 before born 2021-09-29
+ERROR: INDIVIDUAL: US03: I02 Died 2020-01-23 before born 2021-09-29
+ERROR: FAMILY: US04: marriage date 1990-09-29 for family F0001 is not before divorce date 1988-09-29
+ERROR: FAMILY: US05: marriage date 2021-01-23 for family F0002 is not before death date 2020-01-23 for person P0003
+ERROR: FAMILY: US15: family F02 has 16 children
+ERROR: FAMILY: US18: In family F02 chird c1 marries his sibling c2

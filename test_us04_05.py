@@ -4,7 +4,7 @@
 import datetime
 import unittest
 
-from SSW555_project import Person, Family, US0405
+from SSW555_project import Person, Family, us0405
 
 
 class Test_US0405(unittest.TestCase):
@@ -55,12 +55,12 @@ class Test_US0405(unittest.TestCase):
         test_family1.wifeName = "BBB"
         test_family1.chidren = []
 
-        fileName = "Sprint1US0405Output.txt";
+        fileName = "Sprint1US0405Output.txt"
 
         person_list = [test_person1, test_person2]
         family_list = [test_family1, test_family2]
 
-        self.assertEqual(US0405(family_list, person_list), None)
+        self.assertEqual(us0405(family_list, person_list), None)
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
