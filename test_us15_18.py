@@ -5,7 +5,7 @@ Test for Sprint1 US02 03
 
 import datetime
 import unittest
-from SSW555_project import Person, Family, us02, us03
+from SSW555_project import Person, Family, us15, us18
 
 class Test_US02_03(unittest.TestCase):
     
@@ -41,21 +41,19 @@ class Test_US02_03(unittest.TestCase):
         test_family.husbandName = "Morgan Sue"
         test_family.wifeID = "I01"
         test_family.wifeName = "Marry Sue"
-        test_family.chidren = []
+        test_family.chidren = ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16"]
+
+        test_family2 = Family()
+        test_family.id = "F02"
+        test_family.husbandID = "c1"
+        test_family.wifeID = "c2"
+
 
         person_list = [test_person1, test_person2]
-        family_list = [test_family]
+        family_list = [test_family, test_family2]
 
-        self.assertEqual(us02(person_list, family_list), 0)
-        self.assertEqual(us03(person_list), 0)
-        
-        person_list[0].birthDate = "29 SEP 2021"
-        self.assertEqual(us02(person_list, family_list), 1)
-        self.assertEqual(us03(person_list), 1)
-                
-        person_list[1].birthDate = "29 SEP 2021"
-        self.assertEqual(us02(person_list, family_list), 2)
-        self.assertEqual(us03(person_list), 2)
+        self.assertEqual(us15(family_list), 1)
+        self.assertEqual(us18(family_list), 1)
 
 
 if __name__ == '__main__':
