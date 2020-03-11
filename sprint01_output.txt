@@ -22,13 +22,13 @@
 | @F6000000121263361884@ |  1 JAN 1937 |     NA     | @I6000000121264684821@ |    Some /One/    | @I6000000121263078869@ |   Suzi Q /Joestar/   | ['@I6000000121263361878@'] |
 | @F6000000121265269827@ |  1 JAN 1982 |     NA     | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121265269823@ | Tomoko /Higashikata/ | ['@I6000000121263691956@'] |
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------+
+ERROR: INDIVIDUAL: US01: @I6000000121260586821@: Birthday 2022-03-24 occurs in the future
 ERROR: FAMILY: US02: @F6000000121260219857@ Husband's birth date 2000-02-13 following marriage date 1991-04-05
 ERROR: FAMILY: US02: @F6000000121260219857@ Wife's birth date 2022-03-24 following marriage date 1991-04-05
 ERROR: INDIVIDUAL: US03: @I6000000121260219852@ Died 1990-05-02 before born 2000-02-13
 ERROR: FAMILY: US04: marriage date 1990-01-01 for family @F6000000121263060827@ is not before divorce date 1980-01-01
 ERROR: FAMILY: US05: marriage date 1991-04-05 for family @F6000000121260219857@ is not before death date 1990-05-02 for person @I6000000121260219852@
 ERROR: FAMILY: US05: marriage date 1990-01-01 for family @F6000000121263060827@ is not before death date 1977-01-01 for person @I6000000121263078869@
-ERROR: INDIVIDUAL: US01: @I6000000121260586821@: Birthday 2022-03-24 occurs in the future
 ERROR: FAMILY: US06: @F6000000121263060827@: Divorced 1980-01-01 after wife's (@I6000000121263078869@) death on 1977-01-01
 ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
