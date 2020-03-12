@@ -18,7 +18,6 @@ Sprint2 Coding
 US12 author @zw
 US16 author @zw
 """
-#today
 
 import datetime
 from prettytable import PrettyTable
