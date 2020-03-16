@@ -572,6 +572,71 @@ def us08(personList, familyList):
 
 ###############################################
 #                                             #
+#                 US 09                       #
+#                 author @xt                  #
+#                                             #
+###############################################
+def us09(personList, familyList):
+    # Birth before death of parents
+    """Child should be born before death of mother and before 9 months after death of father"""
+    flag = True
+    for family in familyList:
+        child_key = "".join(family.chidren)
+        hus_key = family.husbandID
+        wf_key = family.wifeID
+
+        for i in range(len(personList)):
+            if personList[i].id == child_key:
+                child_birth = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+
+        # check wf/child
+        for person in personList:
+            if person.id == wf_key:
+                if person.death != "N/A":
+                    wf_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                    if wf_death < child_birth:
+                        res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth before death of " + wf_key
+                        print(res)
+                        flag = False
+        # check hus/child
+        for person in personList:
+            if person.id == hus_key:
+                if person.death != "N/A":
+                    hus_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                    dif_time = ((child_birth - hus_death).days/365.25) * 12
+                    if dif_time > 9:
+                        res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth 9 months after death of " + hus_key
+                        print(res)
+                        flag = False
+    if flag:
+        return "Correct"
+    else:
+        return "Error"
+
+###############################################
+#                                             #
+#                 US 10                       #
+#                 author @xt                  #
+#                                             #
+###############################################
+def us10(personList, familyList):
+    # Marriage after 14
+    """Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)"""
+    flag = True
+    for person in personList:
+        # print(person.spouse)
+        if person.spouse != []:
+            if person.age < 14:
+                res = "ERROR: INDIVIDUAL: US10: " + person.id + ": Marriage after 14"
+                print(res)
+                flag = False
+    if flag:
+        return "Correct"
+    else:
+        return "Error"
+    
+###############################################
+#                                             #
 #                 US 15                       #
 #                 author @qw                  #
 #                                             #
