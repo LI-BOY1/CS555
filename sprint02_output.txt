@@ -35,3 +35,5 @@ ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
 ERROR: FAMILY: US15: family @F6000000121263060827@ has 15 children
 ERROR: FAMILY: US18: In family @F6000000121263060827@ chird c3 marries his sibling c2
+ERROR: FAMILY: US12: @I6000000121263691956@'s mother is more than 60 years older than he. 183 years older.
+ERROR: FAMILY: US16: @I6000000121263691956@'s last name is different from father's. Child's last name: Higashikata, father's last name: Joestar.
