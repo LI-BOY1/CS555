@@ -798,6 +798,8 @@ def main():
     us08(personList, familyList)
     
     # spirnt2
+    us09(personList, familyList)
+    us10(personList, familyList)
     us15(familyList)
     us18(familyList)
     us12(personList, familyList)
