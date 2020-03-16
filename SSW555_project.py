@@ -8,6 +8,7 @@ Team member: Tianchen Xu, Qinlan Weng, Boyang, Li, Zeyu Wu
 
 import datetime
 from prettytable import PrettyTable
+from collections import defaultdict
 
 ###############################################
 #                                             #
@@ -626,7 +627,76 @@ def us18(familyList):
                 write_file_and_print(sprint_output, res)
 
     return error
+###############################################
+#                                             #
+#                 US 12                       #
+#                 author @zw                  #
+#                                             #
+###############################################
 
+
+def us12(personList, familyList):
+    """ Mother should be less than 60 years older than her children and father should be less than 80 years older than his children """
+    verify = True
+    for family in familyList:
+        if family.chidren:
+            children_age = defaultdict(int)
+            for person in personList:
+                if person.id == family.husbandID:
+                    father_age = person.age
+                if person.id == family.wifeID:
+                    mother_age = person.age
+
+            for children in family.chidren:
+                for person in personList:
+                    if person.id == children:
+                        children_age[person.id] = person.age
+            for child in children_age.keys():
+                if father_age - children_age[child] > 80:
+                    print(f"ERROR: FAMILY: US12: {child}'s father is more than 80 years older than he. {father_age - children_age[child]} years older.")
+                    verify = False
+                if mother_age - children_age[child] > 60:
+                    print(f"ERROR: FAMILY: US12: {child}'s mother is more than 60 years older than he. {mother_age - children_age[child]} years older.")
+                    verify = False
+                else:
+                    continue
+        else:
+            verify = True
+    if verify:
+        return "All mothers are less than 60 years older than their children and all fathers are less than 80 years older than their children"
+    else:
+        return "Not all mothers are less than 60 years older than their children, or all fathers are less than 80 years older than their children"
+
+###############################################
+#                                             #
+#                 US 16                       #
+#                 author @zw                  #
+#                                             #
+###############################################
+
+
+def us16(personList, familyList):
+    """ All male members of a family should have the same last name """
+    verify = True
+    for family in familyList:
+        if family.chidren:
+            children_ltnm = defaultdict(str)
+            for person in personList:
+                if person.id == family.husbandID:
+                    father_ltnm = person.name.split('/')[1]
+            for children in family.chidren:
+                for person in personList:
+                    if person.id == children:
+                        if person.gender == 'M':
+                            children_ltnm[person.id] = person.name.split('/')[1]
+            for child in children_ltnm.keys():
+                if children_ltnm[child] != father_ltnm:
+                    print(f"ERROR: FAMILY: US16: {child}'s last name is different from father's. Child's last name: {children_ltnm[child]}, father's last name: {father_ltnm}.")
+                    verify = False
+    if verify:
+        return "All male members of a family have the same last name"
+    else:
+        return "Not all male members of a family have the same last name"
 
 
 ###############################################
@@ -665,7 +735,8 @@ def main():
     # spirnt2
     us15(familyList)
     us18(familyList)
-
+    us12(personList, familyList)
+    us16(personList, familyList)
 
 
 if __name__ == '__main__':
