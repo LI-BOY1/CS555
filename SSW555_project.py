@@ -596,7 +596,7 @@ def us09(personList, familyList):
                             wf_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
                             if wf_death < child_birth:
                                 res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth before death of " + wf_key
-                                print(res)
+                                write_file_and_print(sprint_output, res)
                                 flag = False
         # check hus/child
                 for person in personList:
@@ -606,7 +606,7 @@ def us09(personList, familyList):
                             dif_time = ((child_birth - hus_death).days/365.25) * 12
                             if dif_time > 9:
                                 res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth 9 months after death of " + hus_key
-                                print(res)
+                                write_file_and_print(sprint_output, res)
                                 flag = False
     if flag:
         return "Correct"
@@ -628,7 +628,7 @@ def us10(personList, familyList):
         if person.spouse != []:
             if person.age < 14:
                 res = "ERROR: INDIVIDUAL: US10: " + person.id + ": Marriage after 14"
-                print(res)
+                write_file_and_print(sprint_output, res)
                 flag = False
     if flag:
         return "Correct"
@@ -718,10 +718,13 @@ def us12(personList, familyList):
                         children_age[person.id] = person.age
             for child in children_age.keys():
                 if father_age - children_age[child] > 80:
-                    print(f"ERROR: FAMILY: US12: {child}'s father is more than 80 years older than he. {father_age - children_age[child]} years older.")
+                    res = "ERROR: FAMILY: US12: " + child + "'s father is more than 80 years older than he. " + str(father_age - children_age[child]) + " years older."
+                    write_file_and_print(sprint_output, res)
                     verify = False
+
                 if mother_age - children_age[child] > 60:
-                    print(f"ERROR: FAMILY: US12: {child}'s mother is more than 60 years older than he. {mother_age - children_age[child]} years older.")
+                    res = "ERROR: FAMILY: US12: " + child + "'s mother is more than 60 years older than he. " + str(mother_age - children_age[child]) + " years older."
+                    write_file_and_print(sprint_output, res)
                     verify = False
                 else:
                     continue
@@ -756,12 +759,62 @@ def us16(personList, familyList):
                             children_ltnm[person.id] = person.name.split('/')[1]
             for child in children_ltnm.keys():
                 if children_ltnm[child] != father_ltnm:
-                    print(f"ERROR: FAMILY: US16: {child}'s last name is different from father's. Child's last name: {children_ltnm[child]}, father's last name: {father_ltnm}.")
+                    res = "ERROR: FAMILY: US16: " + child + "'s last name is different from father's. Child's last name: " + children_ltnm[child] + ", father's last name: " + father_ltnm + "."
+                    write_file_and_print(sprint_output, res)
                     verify = False
     if verify:
         return "All male members of a family have the same last name"
     else:
         return "Not all male members of a family have the same last name"
+
+
+
+
+###############################################
+#                                             #
+#                 US 22                       #
+#                 author boyang Li            #
+#                                             #
+###############################################
+
+def us22(personList, familyList):
+    pset = set();
+    fset = set();
+    for p in personList:
+        if p.id not in pset:
+            pset.add(p.id)
+        else:
+            res = "ERROR: INDIVIDUAL: US22: person id " + p.id + " is duplicated"
+            write_file_and_print(sprint_output, res)
+
+    for f in familyList:
+        if f.id not in fset:
+            fset.add(f.id)
+        else:
+            res = "ERROR: FAMILY: US22: family id " + f.id + " is duplicated"
+            write_file_and_print(sprint_output, res)
+
+
+
+
+
+
+###############################################
+#                                             #
+#                 US 23                       #
+#                 author boyang Li            #
+#                                             #
+###############################################
+
+def us23(personList):
+    pset = set();
+    for p in personList:
+        iden = p.name + " " + p.birthDate
+        if iden not in pset:
+            pset.add(iden)
+        else:
+            res = "ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name " + iden
+            write_file_and_print(sprint_output, res)
 
 
 ###############################################
@@ -804,6 +857,8 @@ def main():
     us18(familyList)
     us12(personList, familyList)
     us16(personList, familyList)
+    us22(personList, familyList)
+    us23(personList)
 
 
 if __name__ == '__main__':
