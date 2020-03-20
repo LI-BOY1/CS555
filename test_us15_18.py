@@ -1,16 +1,16 @@
 """
 by qw
-Test for Sprint1 US02 03
+Test for Sprint1 US15 18
 """
 
 import datetime
 import unittest
 from SSW555_project import Person, Family, us15, us18
 
-class Test_US02_03(unittest.TestCase):
+class Test_US15_18(unittest.TestCase):
     
-    def test_US02_03(self):
-        """ test US02 and US03"""
+    def test_US15_18(self):
+        """ test US15 and US18"""
         test_person1 = Person()
         test_person1.id = "I01"
         test_person1.name = "Marry Sue"
