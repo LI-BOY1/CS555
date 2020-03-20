@@ -7,5 +7,10 @@ install:
 # command to run tests
 script:
  - python -m unittest test test_us01_06
-
-
+ - python -m unittest test test_us02_03
+ - python -m unittest test test_us04_05
+ - python -m unittest test test_us07_08 
+ - python -m unittest test test_us09_10
+ - python -m unittest test test_us12_16
+ - python -m unittest test test_us15_18
+ - python -m unittest test test_us22_23
