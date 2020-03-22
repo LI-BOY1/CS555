@@ -14,3 +14,4 @@ script:
  - python -m unittest test test_us12_16
  - python -m unittest test test_us15_18
  - python -m unittest test test_us22_23
+ - python -m unittest test test_us21_29
