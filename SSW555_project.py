@@ -387,45 +387,38 @@ def us01(personList, familyList):
     verify = True
     current_time = datetime.datetime.now().date()
     for person in personList:
-        birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-        if person.birthDate is not None and birth_date > datetime.datetime.now().date():
-            res = "ERROR: INDIVIDUAL: US01: " + person.id + ": Birthday " + str(birth_date) + " occurs in the future"
-            print(res)
-            with open(sprint_output, 'a') as file:
-                file.write(res)
-                file.write('\n')
-
-            verify = False
-        if person.death != 'N/A':
-            death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-            if death > current_time:
-                res = "ERROR: INDIVIDUAL: US01: " + person.id + ": death " + str(death) + " occurs in the future"
+        try:
+            birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+        except ValueError:
+            pass
+        else:
+            if person.birthDate is not None and birth_date > datetime.datetime.now().date():
+                res = "ERROR: INDIVIDUAL: US01: " + person.id + ": Birthday " + str(birth_date) + " occurs in the future"
                 print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
-
                 verify = False
+        if person.death != 'N/A':
+            try:
+                death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            except ValueError:
+                pass
+            else:
+                if death > current_time:
+                    res = "ERROR: INDIVIDUAL: US01: " + person.id + ": death " + str(death) + " occurs in the future"
+                    print(res)
+                    verify = False
 
     for family_member in familyList:
         if family_member.married != 'N/A':
             marry_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if marry_date > current_time:
-                res = "ERROR: FAMILY: US01: "+ family_member.husbandName + " and " + family_member.wifeName + " marry at " + str(marry_date) + ", in the future"
+                res = "ERROR: FAMILY: US01: " + family_member.husbandName + " and " + family_member.wifeName + " marry at " + str(marry_date) + ", in the future"
                 print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
                 verify = False
         if family_member.divorce != 'NA':
             divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > current_time:
                 res = "ERROR: FAMILY: US01: " + family_member.husbandName + " and " + family_member.wifeName + " divorce at " + str(divorce_date) + ", in the future"
                 print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
-
                 verify = False
     if verify:
         return "All dates happen before current date."
@@ -456,18 +449,10 @@ def us06(personList, familyList):
             if divorce_date > husband_death:
                 res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after husband's (" + family.husbandID + ") death on " + str(husband_death)
                 print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
-
                 verify = False
             if divorce_date > wife_death:
                 res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after wife's (" + family.wifeID + ") death on " + str(wife_death)
                 print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
-
                 verify = False
     if verify:
         return "All divorces happen before one is dead."
@@ -816,7 +801,51 @@ def us23(personList):
             res = "ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name " + iden
             write_file_and_print(sprint_output, res)
 
+###############################################
+#                                             #
+#                 US 21                       #
+#                 author @zw                  #
+#                                             #
+###############################################
 
+
+def us21(personList, familyList):
+    """ Husband in family should be male and wife in family should be female """
+    verify = True
+    for family in familyList:
+        for person in personList:
+            if person.id == family.husbandID:
+                if person.gender != 'M':
+                    print(f"ERROR: FAMILY: US21: {person.id}'s role in a family is husband, but the gender of {person.id} is {person.gender}.")
+                    verify = False
+            if person.id == family.wifeID:
+                if person.gender != "F":
+                    print(f"ERROR: FAMILY: US21: {person.id}'s role in a family is wife, but the gender of {person.id} is {person.gender}.")
+                    verify = False
+    if verify:
+        return "Husband in family is male and wife in family is female"
+    else:
+        return "Husband in family is not male or wife in family is not female"
+
+###############################################
+#                                             #
+#                 US 29                       #
+#                 author @zw                  #
+#                                             #
+###############################################
+
+
+def us29(personList):
+    """ List all deceased individuals in a GEDCOM file """
+    deceased_list = []
+    deceasedTable = PrettyTable(['ID', 'name', 'birth date', 'death date'])
+    for person in personList:
+        if not person.alive:
+            deceased_list.append(person.id)
+            deceasedTable.add_row([person.id, person.name, person.birthDate, person.death])
+    print("us29: Deceased Individuals")
+    print(deceasedTable)
+    return deceased_list
 ###############################################
 #                                             #
 #                 main                        #
@@ -859,7 +888,11 @@ def main():
     us16(personList, familyList)
     us22(personList, familyList)
     us23(personList)
+    
+    # sprint3
+    us21(personList, familyList)
+    us29(personList)
 
-
+    
 if __name__ == '__main__':
     main()
