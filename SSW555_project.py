@@ -779,11 +779,6 @@ def us22(personList, familyList):
             res = "ERROR: FAMILY: US22: family id " + f.id + " is duplicated"
             write_file_and_print(sprint_output, res)
 
-
-
-
-
-
 ###############################################
 #                                             #
 #                 US 23                       #
@@ -846,6 +841,47 @@ def us29(personList):
     print("us29: Deceased Individuals")
     print(deceasedTable)
     return deceased_list
+
+###############################################
+#                                             #
+#                 US 30                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us30(personList):
+    # List living married
+    """List all living married people in a GEDCOM file"""
+    living_married_list = []
+    living_married_table = PrettyTable(['ID', 'name', 'BirthDate', 'death'])
+    for person in personList:
+        if person.spouse != [] and person.alive == True:
+            living_married_list.append(person.id)
+            living_married_table.add_row([person.id, person.name, person.birthDate, person.death])
+    print("us30: List living married")
+    print(living_married_table)
+    return living_married_list
+
+###############################################
+#                                             #
+#                 US 31                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us31(personList):
+    # List living single
+    """List all living people over 30 who have never been married in a GEDCOM file"""
+    living_single_list = []
+    living_single_table = PrettyTable(['ID', 'name', 'BirthDate', 'death'])
+    for person in personList:
+        if person.spouse == [] and person.age > 30 and person.alive == True:
+            living_single_list.append(person.id)
+            living_single_table.add_row([person.id, person.name, person.birthDate, person.death])
+    print("us31: List living single")
+    print(living_single_table)
+    return living_single_list
+
 ###############################################
 #                                             #
 #                 main                        #
@@ -892,7 +928,8 @@ def main():
     # sprint3
     us21(personList, familyList)
     us29(personList)
+    us30(personList)
+    us31(personList)
 
-    
 if __name__ == '__main__':
     main()
