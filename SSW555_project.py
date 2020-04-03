@@ -21,7 +21,7 @@ from collections import defaultdict
 
 personList = []
 familyList = []
-sprint_output = "sprint02_output.txt"
+sprint_output = "sprint03_output.txt"
 
 flag = -1
 birth = False
@@ -763,8 +763,8 @@ def us16(personList, familyList):
 ###############################################
 
 def us22(personList, familyList):
-    pset = set();
-    fset = set();
+    pset = set()
+    fset = set()
     for p in personList:
         if p.id not in pset:
             pset.add(p.id)
@@ -787,7 +787,7 @@ def us22(personList, familyList):
 ###############################################
 
 def us23(personList):
-    pset = set();
+    pset = set()
     for p in personList:
         iden = p.name + " " + p.birthDate
         if iden not in pset:
@@ -821,6 +821,70 @@ def us21(personList, familyList):
         return "Husband in family is male and wife in family is female"
     else:
         return "Husband in family is not male or wife in family is not female"
+
+
+###############################################
+#                                             #
+#                 US 27                       #
+#                 author @qw                  #
+#                                             #
+###############################################
+
+
+def us27(familyList):
+    """
+    by qw
+    us 27 Include individual ages
+    To "Include person's current age when listing individuals"
+    """
+    pass
+    # age is already included in the original individuals pretty table
+
+
+###############################################
+#                                             #
+#                 US 28                       #
+#                 author @qw                  #
+#                                             #
+###############################################
+def us28(personList, familyList):
+    """
+    by qw
+    us 28 Order siblings by age
+    List siblings in families by decreasing age, i.e. oldest siblings first
+    """
+    
+    test_lst = []
+    
+    for f in familyList:
+        if f.chidren == []:
+            continue
+        
+        children_b_date = []
+        for child in  f.chidren:
+            b_date = str_to_date('1 JAN 9999')
+            
+            for p in personList:
+                if child == p.id:
+                    b_date = str_to_date(p.birthDate)
+
+            children_b_date.append((child, b_date))
+        
+        children_b_date = sorted(children_b_date, key=lambda x:x[1])
+        
+        #print(children_b_date)
+
+        f.chidren = [x[0] for x in children_b_date]
+        test_lst.append(f.chidren)
+    
+    #print(test_lst)
+    return familyList 
+
+        
+
+
+   
+
 
 ###############################################
 #                                             #
@@ -891,8 +955,9 @@ def us31(personList):
 
 
 def main():
+    global familyList
     # prepare data
-    gedcom_file = "sprint02.ged"
+    gedcom_file = "sprint03.ged"
     # MAKE SURE gedcom_file match sprint_output in the beginning of this file
 
     try:
@@ -903,6 +968,8 @@ def main():
         with fp:
             for line in fp:
                 process_line(line.strip())
+
+    familyList = us28(personList, familyList)
 
     createTable()
 
