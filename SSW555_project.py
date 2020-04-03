@@ -847,13 +847,14 @@ def us27(familyList):
 #                 author @qw                  #
 #                                             #
 ###############################################
-def us28(personList):
+def us28(personList, familyList):
     """
     by qw
     us 28 Order siblings by age
     List siblings in families by decreasing age, i.e. oldest siblings first
     """
-    global familyList
+    
+    test_lst = []
     
     for f in familyList:
         if f.chidren == []:
@@ -871,9 +872,14 @@ def us28(personList):
         
         children_b_date = sorted(children_b_date, key=lambda x:x[1])
         
-        print(children_b_date)
+        #print(children_b_date)
 
         f.chidren = [x[0] for x in children_b_date]
+        test_lst.append(f.chidren)
+    
+    #print(test_lst)
+    return familyList 
+
         
 
 
@@ -949,6 +955,7 @@ def us31(personList):
 
 
 def main():
+    global familyList
     # prepare data
     gedcom_file = "sprint03.ged"
     # MAKE SURE gedcom_file match sprint_output in the beginning of this file
@@ -962,7 +969,7 @@ def main():
             for line in fp:
                 process_line(line.strip())
 
-    us28(personList)
+    familyList = us28(personList, familyList)
 
     createTable()
 
