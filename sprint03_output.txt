@@ -15,22 +15,30 @@
 | @I6000000121263691956@ | ['@F6000000121265269827@'] |                          []                          | Josuke /Higashikata/ |   M    |  1 JAN 1983 |     N/A     |  True |  37 |
 | @I6000000121264684821@ |             []             |              ['@F6000000121263361884@']              |      Some /One/      |   M    |  1 JAN 1912 |  1 JAN 1939 | False | 108 |
 | @I6000000121265269823@ |             []             |              ['@F6000000121265269827@']              | Tomoko /Higashikata/ |   F    |  1 JAN 1800 |     N/A     |  True | 220 |
+|         US25C          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   M    |  1 JAN 2019 |     N/A     |  True |  1  |
+|         US25D          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   F    |  1 JAN 2019 |     N/A     |  True |  1  |
 |           c2           |             []             |                          []                          |     c2 /Joestar/     |   F    |  1 JAN 1985 |     N/A     |  True |  35 |
 |           c3           |             []             |                          []                          |     c3 /Joestar/     |   F    |  1 JAN 1984 |     N/A     |  True |  36 |
 |           c4           |             []             |                          []                          |     c4 /Joestar/     |   F    |  1 JAN 1983 |     N/A     |  True |  37 |
 |           c5           |             []             |                          []                          |     c5 /Joestar/     |   F    |  1 JAN 1982 |     N/A     |  True |  38 |
 |           c6           |             []             |                          []                          |     c6 /Joestar/     |   F    |  1 JAN 1981 |     N/A     |  True |  39 |
+|           d1           |             []             |                        ['f4']                        |      Jack /Sue/      |   M    |  1 JAN 1986 |     N/A     |  True |  34 |
+|           d2           |             []             |                        ['f4']                        |      Rose /Sue/      |   F    |  1 JAN 1987 |     N/A     |  True |  33 |
+|           d3           |             []             |                        ['f5']                        |      Jack /Sue/      |   M    |  1 JAN 1986 |     N/A     |  True |  34 |
+|           d4           |             []             |                        ['f5']                        |      Rose /Sue/      |   F    |  1 JAN 1987 |     N/A     |  True |  33 |
 +------------------------+----------------------------+------------------------------------------------------+----------------------+--------+-------------+-------------+-------+-----+
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------------------------------------------------------------------------------------------------+
 |           Id           |   Married   |  divorce   |       HusbandID        |   HusbandName    |         WifeID         |       WifeName       |                                                       Chidren                                                        |
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------------------------------------------------------------------------------------------------+
 | @F0000000000000000000@ |  1 JAN 2018 |     NA     | @I0000000000000000000@ |       YYYY       | @I0000000000000000000@ |         YYYY         |                                                          []                                                          |
-| @F0000000000000000000@ |  1 JAN 2018 |     NA     | @I0000000000000000000@ |       YYYY       | @I0000000000000000000@ |         YYYY         |                                                          []                                                          |
+| @F0000000000000000000@ |  1 JAN 2017 |     NA     | @I0000000000000000000@ |       YYYY       | @I0000000000000000000@ |         YYYY         |                                                          []                                                          |
 | @F6000000121260219857@ |  5 APR 1991 |     NA     | @I6000000121260219852@ |  Jotaro /Kujo/   | @I6000000121260586821@ |      Mary /Sue/      |                                              ['@I6000000121139690821@']                                              |
 | @F6000000121262202839@ | 16 MAR 1969 |     NA     | @I6000000121262202833@ |   Sadao /Kujo/   | @I6000000121262569821@ |     Holy /Kujo/      |                                              ['@I6000000121260219852@']                                              |
 | @F6000000121263060827@ |  1 JAN 1990 | 1 JAN 1980 | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121263078869@ |   Suzi Q /Joestar/   | ['@I6000000121262569821@', 'c6', 'c5', 'c4', 'c3', 'c2', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15'] |
 | @F6000000121263361884@ |  1 JAN 1937 |     NA     | @I6000000121264684821@ |    Some /One/    | @I6000000121263078869@ |   Suzi Q /Joestar/   |                                              ['@I6000000121263361878@']                                              |
 | @F6000000121265269827@ |  1 JAN 1982 |     NA     | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121265269823@ | Tomoko /Higashikata/ |                                              ['@I6000000121263691956@']                                              |
+|           f4           |  1 JAN 2018 |     NA     |           d1           |    Jack /Sue/    |           d2           |      Rose /Sue/      |                                                          []                                                          |
+|           f5           |  1 JAN 2018 |     NA     |           d3           |    Jack /Sue/    |           d4           |      Rose /Sue/      |                                                  ['US25C', 'US25D']                                                  |
 |        test_fam        |  1 JAN 1937 |     NA     |           c3           |   c3 /Joestar/   |           c2           |     c2 /Joestar/     |                                                          []                                                          |
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------------------------------------------------------------------------------------------------+
 ERROR: FAMILY: US02: @F6000000121260219857@ Husband's birth date 2000-02-13 following marriage date 1991-04-05
@@ -55,6 +63,52 @@ ERROR: FAMILY: US12: c3's mother is more than 60 years older than he. 63 years o
 ERROR: FAMILY: US12: c2's mother is more than 60 years older than he. 64 years older.
 ERROR: FAMILY: US12: @I6000000121263691956@'s mother is more than 60 years older than he. 183 years older.
 ERROR: FAMILY: US16: @I6000000121263691956@'s last name is different from father's. Child's last name: Higashikata, father's last name: Joestar.
+ERROR: FAMILY: US16: US25C's last name is different from father's. Child's last name: Zhang, father's last name: Sue.
 ERROR: INDIVIDUAL: US22: person id @I0000000000000000000@ is duplicated
 ERROR: FAMILY: US22: family id @F0000000000000000000@ is duplicated
 ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name YYYY 1 JAN 1990
+ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Maryl /Zhang/ 1 JAN 2019
+ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Jack /Sue/ 1 JAN 1986
+ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Rose /Sue/ 1 JAN 1987
+ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is wife, but the gender of @I0000000000000000000@ is M.
+ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is husband, but the gender of @I0000000000000000000@  is F.
+ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is wife, but the gender of @I0000000000000000000@ is M.
+ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is husband, but the gender of @I0000000000000000000@  is F.
+ERROR: FAMILY: US21: c3's role in a family is husband, but the gender of c3  is F.
+us29: Deceased Individuals
++------------------------+-------------------+-------------+-------------+
+|           ID           |        name       |  birth date |  death date |
++------------------------+-------------------+-------------+-------------+
+| @I6000000121260219852@ |   Jotaro /Kujo/   | 13 FEB 2000 |  2 MAY 1990 |
+| @I6000000121262202833@ |    Sadao /Kujo/   | 24 MAY 1947 | 28 MAY 2001 |
+| @I6000000121263060821@ |  Joseph /Joestar/ | 27 SEP 1920 | 28 SEP 2000 |
+| @I6000000121263078869@ |  Suzi Q /Joestar/ |  1 JAN 1921 |  1 JAN 1930 |
+| @I6000000121263361878@ | Shizuka /Joestar/ |  1 JAN 1938 |  1 JAN 1998 |
+| @I6000000121264684821@ |     Some /One/    |  1 JAN 1912 |  1 JAN 1939 |
++------------------------+-------------------+-------------+-------------+
+us30: List living married
++------------------------+----------------------+-------------+-------+
+|           ID           |         name         |  BirthDate  | death |
++------------------------+----------------------+-------------+-------+
+| @I6000000121260586821@ |      Mary /Sue/      | 24 MAR 2022 |  N/A  |
+| @I6000000121262569821@ |     Holy /Kujo/      | 25 MAY 1942 |  N/A  |
+| @I6000000121265269823@ | Tomoko /Higashikata/ |  1 JAN 1800 |  N/A  |
+|           d1           |      Jack /Sue/      |  1 JAN 1986 |  N/A  |
+|           d2           |      Rose /Sue/      |  1 JAN 1987 |  N/A  |
+|           d3           |      Jack /Sue/      |  1 JAN 1986 |  N/A  |
+|           d4           |      Rose /Sue/      |  1 JAN 1987 |  N/A  |
++------------------------+----------------------+-------------+-------+
+us31: List living single
++------------------------+----------------------+------------+-------+
+|           ID           |         name         | BirthDate  | death |
++------------------------+----------------------+------------+-------+
+| @I0000000000000000000@ |         XXXX         | 1 JAN 1988 |  N/A  |
+| @I6000000121263691956@ | Josuke /Higashikata/ | 1 JAN 1983 |  N/A  |
+|           c2           |     c2 /Joestar/     | 1 JAN 1985 |  N/A  |
+|           c3           |     c3 /Joestar/     | 1 JAN 1984 |  N/A  |
+|           c4           |     c4 /Joestar/     | 1 JAN 1983 |  N/A  |
+|           c5           |     c5 /Joestar/     | 1 JAN 1982 |  N/A  |
+|           c6           |     c6 /Joestar/     | 1 JAN 1981 |  N/A  |
++------------------------+----------------------+------------+-------+
+ERROR: FAMILY: US24: family id f5 has the duplicated marry date 1 JAN 2018  and husband name Jack /Sue/ and wfie name Rose /Sue/
+ERROR: FAMILY: US25: family id f5 has the children with same name Maryl /Zhang/  and birthday 1 JAN 2019

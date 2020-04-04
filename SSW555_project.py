@@ -796,6 +796,66 @@ def us23(personList):
             res = "ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name " + iden
             write_file_and_print(sprint_output, res)
 
+
+
+
+###############################################
+#                                             #
+#                 US 24                       #
+#                 author boyang li            #
+#                                             #
+###############################################
+def us24(familyList):
+    fset = set()
+
+    for f in familyList:
+        key = "" + f.married + "/" + f.husbandName + "/" + f.wifeName
+        if key not in fset:
+            fset.add(key)
+        else:
+            res = "ERROR: FAMILY: US24: family id " + f.id + " has the duplicated marry date " + f.married + "  and husband name " + f.husbandName + " and wfie name " + f.wifeName
+            write_file_and_print(sprint_output, res)
+
+
+###############################################
+#                                             #
+#                 US 25                       #
+#                 author boyang li            #
+#                                             #
+###############################################
+def us25(personList, familyList):
+    fset = set()
+
+    for f in familyList:
+        list = f.chidren
+        for ids in list:
+            for p in personList:
+                if ids == p.id:
+                    iden = "" + p.name + "/" + p.birthDate
+                    if iden not in fset:
+                        fset.add(iden)
+                    else:
+                        res = "ERROR: FAMILY: US25: family id " + f.id + " has the children with same name " + p.name + "  and birthday " + p.birthDate
+                        write_file_and_print(sprint_output, res)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###############################################
 #                                             #
 #                 US 21                       #
@@ -811,11 +871,15 @@ def us21(personList, familyList):
         for person in personList:
             if person.id == family.husbandID:
                 if person.gender != 'M':
-                    print(f"ERROR: FAMILY: US21: {person.id}'s role in a family is husband, but the gender of {person.id} is {person.gender}.")
+                    res = "ERROR: FAMILY: US21: " + person.id + "'s role in a family is husband, but the gender of " + person.id + "  is " + person.gender + "."
+                    print(res)
+                    write_file_and_print(sprint_output, res)
                     verify = False
             if person.id == family.wifeID:
                 if person.gender != "F":
-                    print(f"ERROR: FAMILY: US21: {person.id}'s role in a family is wife, but the gender of {person.id} is {person.gender}.")
+                    res = "ERROR: FAMILY: US21: " + person.id + "'s role in a family is wife, but the gender of " + person.id + " is " + person.gender + "."
+                    print(res)
+                    write_file_and_print(sprint_output, res)
                     verify = False
     if verify:
         return "Husband in family is male and wife in family is female"
@@ -902,8 +966,13 @@ def us29(personList):
         if not person.alive:
             deceased_list.append(person.id)
             deceasedTable.add_row([person.id, person.name, person.birthDate, person.death])
-    print("us29: Deceased Individuals")
+    res = "us29: Deceased Individuals"
+    print(res)
+    write_file_and_print(sprint_output, res)
     print(deceasedTable)
+    tableConten = deceasedTable.get_string()
+    write_file_and_print(sprint_output, tableConten)
+
     return deceased_list
 
 ###############################################
@@ -922,8 +991,15 @@ def us30(personList):
         if person.spouse != [] and person.alive == True:
             living_married_list.append(person.id)
             living_married_table.add_row([person.id, person.name, person.birthDate, person.death])
-    print("us30: List living married")
+
+    res = "us30: List living married"
+    print(res)
+    write_file_and_print(sprint_output, res)
+
     print(living_married_table)
+    tableContent = living_married_table.get_string()
+    write_file_and_print(sprint_output, tableContent)
+
     return living_married_list
 
 ###############################################
@@ -942,9 +1018,21 @@ def us31(personList):
         if person.spouse == [] and person.age > 30 and person.alive == True:
             living_single_list.append(person.id)
             living_single_table.add_row([person.id, person.name, person.birthDate, person.death])
-    print("us31: List living single")
+
+
+    res = "us31: List living single"
+    print(res)
+    write_file_and_print(sprint_output, res)
+
     print(living_single_table)
+    tableContent = living_single_table.get_string()
+    write_file_and_print(sprint_output, tableContent)
+
     return living_single_list
+
+
+
+
 
 ###############################################
 #                                             #
@@ -997,6 +1085,8 @@ def main():
     us29(personList)
     us30(personList)
     us31(personList)
+    us24(familyList)
+    us25(personList, familyList)
 
 if __name__ == '__main__':
     main()
