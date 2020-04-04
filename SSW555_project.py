@@ -394,7 +394,7 @@ def us01(personList, familyList):
         else:
             if person.birthDate is not None and birth_date > datetime.datetime.now().date():
                 res = "ERROR: INDIVIDUAL: US01: " + person.id + ": Birthday " + str(birth_date) + " occurs in the future"
-                print(res)
+                write_file_and_print(sprint_output, res)
                 verify = False
         if person.death != 'N/A':
             try:
@@ -404,7 +404,7 @@ def us01(personList, familyList):
             else:
                 if death > current_time:
                     res = "ERROR: INDIVIDUAL: US01: " + person.id + ": death " + str(death) + " occurs in the future"
-                    print(res)
+                    write_file_and_print(sprint_output, res)
                     verify = False
 
     for family_member in familyList:
@@ -412,13 +412,13 @@ def us01(personList, familyList):
             marry_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if marry_date > current_time:
                 res = "ERROR: FAMILY: US01: " + family_member.husbandName + " and " + family_member.wifeName + " marry at " + str(marry_date) + ", in the future"
-                print(res)
+                write_file_and_print(sprint_output, res)
                 verify = False
         if family_member.divorce != 'NA':
             divorce_date = datetime.datetime.strptime(datetime.datetime.strptime(family_member.divorce, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > current_time:
                 res = "ERROR: FAMILY: US01: " + family_member.husbandName + " and " + family_member.wifeName + " divorce at " + str(divorce_date) + ", in the future"
-                print(res)
+                write_file_and_print(sprint_output, res)
                 verify = False
     if verify:
         return "All dates happen before current date."
@@ -448,11 +448,11 @@ def us06(personList, familyList):
                         wife_death = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
             if divorce_date > husband_death:
                 res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after husband's (" + family.husbandID + ") death on " + str(husband_death)
-                print(res)
+                write_file_and_print(sprint_output, res)
                 verify = False
             if divorce_date > wife_death:
                 res = "ERROR: FAMILY: US06: " + family.id + ": Divorced " + str(divorce_date) + " after wife's (" + family.wifeID + ") death on " + str(wife_death)
-                print(res)
+                write_file_and_print(sprint_output, res)
                 verify = False
     if verify:
         return "All divorces happen before one is dead."
@@ -872,13 +872,11 @@ def us21(personList, familyList):
             if person.id == family.husbandID:
                 if person.gender != 'M':
                     res = "ERROR: FAMILY: US21: " + person.id + "'s role in a family is husband, but the gender of " + person.id + "  is " + person.gender + "."
-                    print(res)
                     write_file_and_print(sprint_output, res)
                     verify = False
             if person.id == family.wifeID:
                 if person.gender != "F":
                     res = "ERROR: FAMILY: US21: " + person.id + "'s role in a family is wife, but the gender of " + person.id + " is " + person.gender + "."
-                    print(res)
                     write_file_and_print(sprint_output, res)
                     verify = False
     if verify:
@@ -967,9 +965,7 @@ def us29(personList):
             deceased_list.append(person.id)
             deceasedTable.add_row([person.id, person.name, person.birthDate, person.death])
     res = "us29: Deceased Individuals"
-    print(res)
     write_file_and_print(sprint_output, res)
-    print(deceasedTable)
     tableConten = deceasedTable.get_string()
     write_file_and_print(sprint_output, tableConten)
 
@@ -993,10 +989,7 @@ def us30(personList):
             living_married_table.add_row([person.id, person.name, person.birthDate, person.death])
 
     res = "us30: List living married"
-    print(res)
     write_file_and_print(sprint_output, res)
-
-    print(living_married_table)
     tableContent = living_married_table.get_string()
     write_file_and_print(sprint_output, tableContent)
 
@@ -1021,10 +1014,8 @@ def us31(personList):
 
 
     res = "us31: List living single"
-    print(res)
     write_file_and_print(sprint_output, res)
 
-    print(living_single_table)
     tableContent = living_single_table.get_string()
     write_file_and_print(sprint_output, tableContent)
 
@@ -1081,12 +1072,12 @@ def main():
     us23(personList)
     
     # sprint3
+    us24(familyList)
+    us25(personList, familyList)
     us21(personList, familyList)
     us29(personList)
     us30(personList)
     us31(personList)
-    us24(familyList)
-    us25(personList, familyList)
 
 if __name__ == '__main__':
     main()

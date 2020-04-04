@@ -41,6 +41,7 @@
 |           f5           |  1 JAN 2018 |     NA     |           d3           |    Jack /Sue/    |           d4           |      Rose /Sue/      |                                                  ['US25C', 'US25D']                                                  |
 |        test_fam        |  1 JAN 1937 |     NA     |           c3           |   c3 /Joestar/   |           c2           |     c2 /Joestar/     |                                                          []                                                          |
 +------------------------+-------------+------------+------------------------+------------------+------------------------+----------------------+----------------------------------------------------------------------------------------------------------------------+
+ERROR: INDIVIDUAL: US01: @I6000000121260586821@: Birthday 2022-03-24 occurs in the future
 ERROR: FAMILY: US02: @F6000000121260219857@ Husband's birth date 2000-02-13 following marriage date 1991-04-05
 ERROR: FAMILY: US02: @F6000000121260219857@ Wife's birth date 2022-03-24 following marriage date 1991-04-05
 ERROR: FAMILY: US02: test_fam Wife's birth date 1985-01-01 following marriage date 1937-01-01
@@ -50,6 +51,7 @@ ERROR: FAMILY: US04: marriage date 1990-01-01 for family @F6000000121263060827@ 
 ERROR: FAMILY: US05: marriage date 1991-04-05 for family @F6000000121260219857@ is not before death date 1990-05-02 for person @I6000000121260219852@
 ERROR: FAMILY: US05: marriage date 1990-01-01 for family @F6000000121263060827@ is not before death date 1930-01-01 for person @I6000000121263078869@
 ERROR: FAMILY: US05: marriage date 1937-01-01 for family @F6000000121263361884@ is not before death date 1930-01-01 for person @I6000000121263078869@
+ERROR: FAMILY: US06: @F6000000121263060827@: Divorced 1980-01-01 after wife's (@I6000000121263078869@) death on 1930-01-01
 ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
 ERROR: INDIVIDUAL: US09: @I6000000121139690821@: birth 9 months after death of @I6000000121260219852@
@@ -70,6 +72,8 @@ ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name YYY
 ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Maryl /Zhang/ 1 JAN 2019
 ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Jack /Sue/ 1 JAN 1986
 ERROR: INDIVIDUAL: US23: more than one person has the same birthday and name Rose /Sue/ 1 JAN 1987
+ERROR: FAMILY: US24: family id f5 has the duplicated marry date 1 JAN 2018  and husband name Jack /Sue/ and wfie name Rose /Sue/
+ERROR: FAMILY: US25: family id f5 has the children with same name Maryl /Zhang/  and birthday 1 JAN 2019
 ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is wife, but the gender of @I0000000000000000000@ is M.
 ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is husband, but the gender of @I0000000000000000000@  is F.
 ERROR: FAMILY: US21: @I0000000000000000000@'s role in a family is wife, but the gender of @I0000000000000000000@ is M.
@@ -110,5 +114,3 @@ us31: List living single
 |           c5           |     c5 /Joestar/     | 1 JAN 1982 |  N/A  |
 |           c6           |     c6 /Joestar/     | 1 JAN 1981 |  N/A  |
 +------------------------+----------------------+------------+-------+
-ERROR: FAMILY: US24: family id f5 has the duplicated marry date 1 JAN 2018  and husband name Jack /Sue/ and wfie name Rose /Sue/
-ERROR: FAMILY: US25: family id f5 has the children with same name Maryl /Zhang/  and birthday 1 JAN 2019
