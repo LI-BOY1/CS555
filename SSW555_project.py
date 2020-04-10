@@ -21,7 +21,7 @@ from collections import defaultdict
 
 personList = []
 familyList = []
-sprint_output = "sprint03_output.txt"
+sprint_output = "sprint04_output.txt"
 
 flag = -1
 birth = False
