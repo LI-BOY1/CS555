@@ -1115,7 +1115,7 @@ def us42(personList, familyList):
 def main():
     global familyList
     # prepare data
-    gedcom_file = "sprint03.ged"
+    gedcom_file = "sprint04.ged"
     # MAKE SURE gedcom_file match sprint_output in the beginning of this file
 
     try:
