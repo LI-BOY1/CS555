@@ -1021,7 +1021,86 @@ def us31(personList):
 
     return living_single_list
 
+###############################################
+#                                             #
+#                 US 34                       #
+#                 author @zw                  #
+#                                             #
+###############################################
 
+
+def us34(personList, familyList):
+    """ List all couples who were married when the older spouse was more than twice as old as the younger spouse """
+    verify = True
+    checkTable = PrettyTable(['ID', 'married', 'age when husband was married', 'age when wife was married'])
+    for family in familyList:
+        marry_date = datetime.datetime.strptime(family.married, '%d %b %Y').year
+        for person in personList:
+            if person.id == family.husbandID:
+                birth_date_m = datetime.datetime.strptime(person.birthDate, '%d %b %Y').year
+            if person.id == family.wifeID:
+                birth_date_f = datetime.datetime.strptime(person.birthDate, '%d %b %Y').year
+
+        if marry_date - birth_date_m > (marry_date - birth_date_f) * 2:
+            res = f"ERROR: FAMILY: US34: In family {family.id}, husband was more than twice as old as the wife when they are married."
+            write_file_and_print(sprint_output, res)
+            checkTable.add_row([family.id, family.married, marry_date - birth_date_m, marry_date - birth_date_f])
+            verify = False
+        if marry_date - birth_date_f > (marry_date - birth_date_m) * 2:
+            res = f"ERROR: FAMILY: US34: In family {family.id}, wife was more than twice as old as the husband when they are married."
+            write_file_and_print(sprint_output, res)
+            checkTable.add_row([family.id, family.married, marry_date - birth_date_m, marry_date - birth_date_f])
+            verify = False
+    print("us34: Couples who were married when the older spouse was more than twice as old as the younger spouse")
+    print(checkTable)
+    if verify:
+        return "No couples who were married when the older spouse was more than twice as old as the younger spouse"
+    else:
+        return "There are some couples who were married when the older spouse was more than twice as old as the younger spouse"
+
+###############################################
+#                                             #
+#                 US 42                       #
+#                 author @zw                  #
+#                                             #
+###############################################
+
+
+def us42(personList, familyList):
+    """ All dates should be legitimate dates for the months specified (e.g., 2/30/2015 is not legitimate) """
+    verify = True
+    for family in familyList:
+        try:
+            datetime.datetime.strptime(family.married, '%d %b %Y').date()
+        except ValueError:
+            res = f"ERROR: FAMILY: US42: {family.id} was married at {family.married}, which is not legitimate."
+            write_file_and_print(sprint_output, res)
+            verify = False
+        if family.divorce != "NA":
+            try:
+                datetime.datetime.strptime(family.divorce, '%d %b %Y').date()
+            except ValueError:
+                res = f"ERROR: FAMILY: US42: {family.id} was divorced at {family.divorce}, which is not legitimate."
+                write_file_and_print(sprint_output, res)
+                verify = False
+    for person in personList:
+        try:
+            datetime.datetime.strptime(person.birthDate, '%d %b %Y').date()
+        except ValueError:
+            res = f"ERROR: INDIVIDUAL: US42: {person.id} was born at {person.birthDate}, which is not legitimate."
+            write_file_and_print(sprint_output, res)
+            verify = False
+        if person.death != "N/A":
+            try:
+                datetime.datetime.strptime(person.death, '%d %b %Y').date()
+            except ValueError:
+                res = f"ERROR: FAMILY: US42: {person.id} died at {person.death}, which is not legitimate."
+                write_file_and_print(sprint_output, res)
+                verify = False
+    if verify:
+        return "All dates are legitimate dates for the months specified."
+    else:
+        return "Not all dates are legitimate dates for the months specified."
 
 
 
@@ -1079,5 +1158,8 @@ def main():
     us30(personList)
     us31(personList)
 
+    # sprint4
+    us34(personList, familyList)
+    us42(personList, familyList)    
 if __name__ == '__main__':
     main()
