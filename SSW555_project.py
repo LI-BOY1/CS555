@@ -478,31 +478,39 @@ def us07(personList, familyList):
     for person in personList:
         #check dead people
         if person.alive == False:
-            # get death
-            death_date = datetime.datetime.strptime(datetime.datetime.strptime(person.death,'%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-            # get birth
-            birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-            div_time = (death_date - birth_date).days/365.25
-            if div_time > 150:
-                res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
-                print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
+            try:
+                # get death
+                death_date = datetime.datetime.strptime(datetime.datetime.strptime(person.death,'%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                # get birth
+                birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            except ValueError:
+                pass
+            else:
+                div_time = (death_date - birth_date).days/365.25
+                if div_time > 150:
+                    res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
+                    print(res)
+                    with open(sprint_output, 'a') as file:
+                        file.write(res)
+                        file.write('\n')
 
-                flag = False
+                    flag = False
         else:
-            # get birth
-            birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-            div_time = (date_now - birth_date).days/365.25
-            if div_time > 150:
-                res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
-                print(res)
-                with open(sprint_output, 'a') as file:
-                    file.write(res)
-                    file.write('\n')
+            try:
+                # get birth
+                birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            except ValueError:
+                pass
+            else:
+                div_time = (date_now - birth_date).days/365.25
+                if div_time > 150:
+                    res = "ERROR: INDIVIDUAL: US07: " + person.id + ": more than 150 years old"
+                    print(res)
+                    with open(sprint_output, 'a') as file:
+                        file.write(res)
+                        file.write('\n')
 
-                flag = False
+                    flag = False
     if flag:
         return 'Correct'
     else:
@@ -572,27 +580,38 @@ def us09(personList, familyList):
 
         for i in range(len(personList)):
             if personList[i].id == child_key:
-                child_birth = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-
-        # check wf/child
-                for person in personList:
-                    if person.id == wf_key:
-                        if person.death != "N/A":
-                            wf_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-                            if wf_death < child_birth:
-                                res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth before death of " + wf_key
-                                write_file_and_print(sprint_output, res)
-                                flag = False
-        # check hus/child
-                for person in personList:
-                    if person.id == hus_key:
-                        if person.death != "N/A":
-                            hus_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
-                            dif_time = ((child_birth - hus_death).days/365.25) * 12
-                            if dif_time > 9:
-                                res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth 9 months after death of " + hus_key
-                                write_file_and_print(sprint_output, res)
-                                flag = False
+                try:
+                    child_birth = datetime.datetime.strptime(datetime.datetime.strptime(personList[i].birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                except ValueError:
+                    pass
+                else:    
+                    # check wf/child
+                    for person in personList:
+                        if person.id == wf_key:
+                            if person.death != "N/A":
+                                try:
+                                    wf_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                                except ValueError:
+                                    pass
+                                else:
+                                    if wf_death < child_birth:
+                                        res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth before death of " + wf_key
+                                        write_file_and_print(sprint_output, res)
+                                        flag = False
+                    # check hus/child
+                    for person in personList:
+                        if person.id == hus_key:
+                            if person.death != "N/A":
+                                try:
+                                    hus_death = datetime.datetime.strptime(datetime.datetime.strptime(person.death, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+                                except ValueError:
+                                    pass
+                                else:
+                                    dif_time = ((child_birth - hus_death).days/365.25) * 12
+                                    if dif_time > 9:
+                                        res = "ERROR: INDIVIDUAL: US09: " + child_key + ": birth 9 months after death of " + hus_key
+                                        write_file_and_print(sprint_output, res)
+                                        flag = False
     if flag:
         return "Correct"
     else:
@@ -601,7 +620,7 @@ def us09(personList, familyList):
 ###############################################
 #                                             #
 #                 US 10                       #
-#                 author @xt                  #
+#                 author @tx                  #
 #                                             #
 ###############################################
 def us10(personList, familyList):
@@ -839,23 +858,6 @@ def us25(personList, familyList):
                         write_file_and_print(sprint_output, res)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ###############################################
 #                                             #
 #                 US 21                       #
@@ -1060,6 +1062,86 @@ def us34(personList, familyList):
 
 ###############################################
 #                                             #
+#                 US 38                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us38(personList):
+    # List upcoming birthdays
+    """List all living people in a GEDCOM file whose birthdays occur in the next 30 days"""
+    current_time = datetime.datetime.now().date()
+    today_d = datetime.datetime.now()
+    birth_coming_list =[]
+    birth_coming_table = PrettyTable(['ID', 'name', 'BirthDate', 'death'])
+
+    for person in personList:
+        if person.alive == True:
+            try:
+                birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            except ValueError:
+                pass
+            else:
+                birth_this_year = birth_date.replace(year=today_d.year)
+                div_day = (birth_this_year - current_time).days
+                if 0 < div_day < 30: 
+                    birth_coming_list.append(person.id)
+                    birth_coming_table.add_row([person.id, person.name, person.birthDate, person.death])
+    
+    res = "us38: List upcoming birthdays"
+    write_file_and_print(sprint_output, res)
+
+    tableContent = birth_coming_table.get_string()
+    write_file_and_print(sprint_output, tableContent)
+
+    return birth_coming_list
+
+
+###############################################
+#                                             #
+#                 US 39                       #
+#                 author @tx                  #
+#                                             #
+###############################################
+
+def us39(personList, familyList):
+    # List upcoming anniversaries
+    """List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days"""
+    current_time = datetime.datetime.now().date()
+    today_d = datetime.datetime.now()
+    marriage_anvrsy_list = []
+    marriage_anvrsy_table = PrettyTable(["ID", "Married", "divorce","HusbandID", "HusbandName", "WifeID", "WifeName"])
+
+    for family in familyList:
+        if family.divorce == "NA":
+            try:
+                married_date = datetime.datetime.strptime(datetime.datetime.strptime(family.married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+            except ValueError:
+                pass
+            else:
+                # check hus
+                hus_id = family.husbandID
+                wif_id = family.wifeID
+                for person in personList:
+                    if person.id == hus_id and person.alive == True:
+                        for p in personList:
+                            if p.id == wif_id and p.alive == True:
+                                married_this_year = married_date.replace(year=today_d.year)
+                                div_day = (married_this_year - current_time).days
+                                if 0 < div_day < 30: 
+                                    marriage_anvrsy_list.append(family.id)
+                                    marriage_anvrsy_table.add_row([family.id, family.married, family.divorce, family.husbandID, family.husbandName, family.wifeID, family.wifeName])
+    
+    res = "us39: List upcoming anniversaries"
+    write_file_and_print(sprint_output, res)
+
+    tableContent = marriage_anvrsy_table.get_string()
+    write_file_and_print(sprint_output, tableContent)
+
+    return marriage_anvrsy_list
+
+###############################################
+#                                             #
 #                 US 42                       #
 #                 author @zw                  #
 #                                             #
@@ -1134,8 +1216,8 @@ def main():
     # sprint1
     us01(personList, familyList)
     us02(personList, familyList)
-    us03(personList)
-    us0405(familyList, personList)
+    # us03(personList)
+    # us0405(familyList, personList)
     us06(personList, familyList)
     us07(personList, familyList)
     us08(personList, familyList)
@@ -1160,6 +1242,9 @@ def main():
 
     # sprint4
     us34(personList, familyList)
-    us42(personList, familyList)    
+    us42(personList, familyList)
+    us38(personList)
+    us39(personList, familyList)
+
 if __name__ == '__main__':
     main()
