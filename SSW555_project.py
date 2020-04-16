@@ -175,7 +175,13 @@ def createTable():
     # calculate the age for each person
     for p in personList:
         birthdate = p.birthDate
-        birthYear = birthdate.split()[2]
+        bd_list = birthdate.split()
+        if len(bd_list) == 1:
+            birthYear = bd_list[0]
+        elif len(bd_list) == 2:
+            birthYear = bd_list[1]
+        else:
+            birthYear = bd_list[2]
         age = year - int(birthYear)
         p.age = age
 
@@ -253,7 +259,14 @@ def createTable():
 
 
 def str_to_date(str_date):
-    return datetime.datetime.strptime(str_date, '%d %b %Y').date()
+    d_list = str_date.split()
+    if len(d_list) == 1:
+        return datetime.datetime.strptime(str_date, '%Y').date()
+    elif len(d_list) == 2:
+        return datetime.datetime.strptime(str_date, '%b %Y').date()
+    else:
+        return datetime.datetime.strptime(str_date, '%d %b %Y').date()
+
 
 
 def compare_date(date1, date2):
@@ -534,7 +547,8 @@ def us08(personList, familyList):
     for person in personList:
         key = person.child
         ky = "".join(key)
-        birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+        #birth_date = datetime.datetime.strptime(datetime.datetime.strptime(person.birthDate, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
+        birth_date = str_to_date(person.birthDate)
         for i in range(len(familyList)):
             if familyList[i].id == ky:
                 married_date = datetime.datetime.strptime(datetime.datetime.strptime(familyList[i].married, '%d %b %Y').strftime("%Y-%m-%d"), '%Y-%m-%d').date()
@@ -1186,6 +1200,75 @@ def us42(personList, familyList):
 
 
 
+
+
+###############################################
+#                                             #
+#                 US 33                       #
+#                 author @qw                  #
+#                                             #
+###############################################
+def us33(personList, familyList):
+    """
+    by qw
+    us 33 List orphans
+    List all orphaned children 
+    (both parents dead and child < 18 years old) in a GEDCOM file
+    """
+    
+    orphans = PrettyTable(['Id', 'Name'])
+    cnt = 0
+    for f in familyList:
+        if f.chidren == []:
+            continue
+        
+        hus_dead ='N/A'
+        for hus in personList:
+            if f.husbandID == hus.id:
+                hus_dead = hus.death 
+                break
+        if hus_dead =='N/A':
+            continue
+        
+        wife_dead ='N/A'
+        for wife in personList:
+            if f.wifeID == wife.id:
+                wife_dead = wife.death 
+                break
+        if wife_dead =='N/A':
+            continue
+        
+        for child in f.chidren:
+            for c in personList:
+                if child == c.id:
+                    if c.age >= 0 and c.age < 18:
+                        orphans.add_row([c.id, c.name])
+                        cnt += 1
+                    break
+        
+    write_file_and_print(sprint_output, "us33: List orphans")
+    write_file_and_print(sprint_output, orphans.get_string())
+    
+    return cnt
+
+###############################################
+#                                             #
+#                 US 41                       #
+#                 author @qw                  #
+#                                             #
+###############################################
+def us41(personList, familyList):
+    """
+    by qw
+    us 41 Include partial dates
+    Accept and use dates without days or without days and months 
+    """
+    # modification made in parser
+    pass
+
+        
+
+
 ###############################################
 #                                             #
 #                 main                        #
@@ -1245,6 +1328,8 @@ def main():
     us42(personList, familyList)
     us38(personList)
     us39(personList, familyList)
+    us33(personList, familyList)
+
 
 if __name__ == '__main__':
     main()

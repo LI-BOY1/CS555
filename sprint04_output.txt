@@ -17,6 +17,10 @@
 | @I6000000121265269823@ |             []             |              ['@F6000000121265269827@']              | Tomoko /Higashikata/ |   F    |  1 JAN 1800 |     N/A     |  True | 220 |
 |         US25C          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   M    |  1 JAN 2019 |     N/A     |  True |  1  |
 |         US25D          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   F    |  1 JAN 2019 |     N/A     |  True |  1  |
+|       US33_CHILD       |          ['US33']          |                          []                          |     child /us33/     |   F    |  1 JAN 2011 |     N/A     |  True |  9  |
+|        US33_HUS        |          ['US33']          |                          []                          |      hus /us33/      |   M    |  1 JAN 1975 |  1 JAN 2015 | False |  45 |
+|       US33_WIFE        |          ['US33']          |                          []                          |     wife /us33/      |   F    |  1 JAN 1975 |  1 JAN 2015 | False |  45 |
+|          US41          |             []             |                          []                          |     US41 /us41/      |   F    |   JAN 1975  |     2015    | False |  45 |
 |           c2           |             []             |                          []                          |     c2 /Joestar/     |   F    |  1 JAN 1985 |     N/A     |  True |  35 |
 |           c3           |             []             |                          []                          |     c3 /Joestar/     |   F    |  1 JAN 1984 |     N/A     |  True |  36 |
 |           c4           |             []             |                          []                          |     c4 /Joestar/     |   F    |  1 JAN 1983 |     N/A     |  True |  37 |
@@ -37,6 +41,7 @@
 | @F6000000121263060827@ |  1 JAN 1990 | 1 JAN 1980 | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121263078869@ |   Suzi Q /Joestar/   | ['@I6000000121262569821@', 'c6', 'c5', 'c4', 'c3', 'c2', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15'] |
 | @F6000000121263361884@ |  1 JAN 1937 |     NA     | @I6000000121264684821@ |    Some /One/    | @I6000000121263078869@ |   Suzi Q /Joestar/   |                                              ['@I6000000121263361878@']                                              |
 | @F6000000121265269827@ |  1 JAN 1982 |     NA     | @I6000000121263060821@ | Joseph /Joestar/ | @I6000000121265269823@ | Tomoko /Higashikata/ |                                              ['@I6000000121263691956@']                                              |
+|          US33          |  1 JAN 2000 |     NA     |        US33_HUS        |    hus /us33/    |       US33_WIFE        |     wife /us33/      |                                                    ['US33_CHILD']                                                    |
 |           f4           |  1 JAN 2018 |     NA     |           d1           |    Jack /Sue/    |           d2           |      Rose /Sue/      |                                                          []                                                          |
 |           f5           |  1 JAN 2018 |     NA     |           d3           |    Jack /Sue/    |           d4           |      Rose /Sue/      |                                                  ['US25C', 'US25D']                                                  |
 |        test_fam        |  1 JAN 1937 |     NA     |           c3           |   c3 /Joestar/   |           c2           |     c2 /Joestar/     |                                                          []                                                          |
@@ -49,6 +54,8 @@ ERROR: FAMILY: US02: test_fam Husband's birth date 1984-01-01 following marriage
 ERROR: FAMILY: US06: @F6000000121263060827@: Divorced 1980-01-01 after wife's (@I6000000121263078869@) death on 1930-01-01
 ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
+ERROR: INDIVIDUAL: US08: US33_HUS: birth before marriage
+ERROR: INDIVIDUAL: US08: US33_WIFE: birth before marriage
 ERROR: INDIVIDUAL: US09: @I6000000121263361878@: birth before death of @I6000000121263078869@
 ERROR: INDIVIDUAL: US10: @I6000000121260586821@: Marriage after 14
 ERROR: FAMILY: US15: family @F6000000121263060827@ has 15 children
@@ -82,6 +89,9 @@ us29: Deceased Individuals
 | @I6000000121263078869@ |  Suzi Q /Joestar/ |  1 JAN 1921 |  1 JAN 1930 |
 | @I6000000121263361878@ | Shizuka /Joestar/ |  1 JAN 1938 |  1 JAN 1998 |
 | @I6000000121264684821@ |     Some /One/    |  1 JAN 1912 | 32 JAN 1939 |
+|        US33_HUS        |     hus /us33/    |  1 JAN 1975 |  1 JAN 2015 |
+|       US33_WIFE        |    wife /us33/    |  1 JAN 1975 |  1 JAN 2015 |
+|          US41          |    US41 /us41/    |   JAN 1975  |     2015    |
 +------------------------+-------------------+-------------+-------------+
 us30: List living married
 +------------------------+----------------------+-------------+-------+
@@ -113,6 +123,8 @@ ERROR: FAMILY: US34: In family @F6000000121265269827@, wife was more than twice 
 ERROR: FAMILY: US34: In family test_fam, husband was more than twice as old as the wife when they are married.
 ERROR: FAMILY: US34: In family test_fam, wife was more than twice as old as the husband when they are married.
 ERROR: FAMILY: US42: @I6000000121264684821@ died at 32 JAN 1939, which is not legitimate.
+ERROR: INDIVIDUAL: US42: US41 was born at JAN 1975, which is not legitimate.
+ERROR: FAMILY: US42: US41 died at 2015, which is not legitimate.
 us38: List upcoming birthdays
 +------------------------+----------------+------------+-------+
 |           ID           |      name      | BirthDate  | death |
@@ -125,3 +137,9 @@ us39: List upcoming anniversaries
 +------------------------+------------+---------+------------------------+---------------+------------------------+------------+
 | @F6000000121260219857@ | 1 MAY 1991 |    NA   | @I6000000121260219852@ | Jotaro /Kujo/ | @I6000000121260586821@ | Mary /Sue/ |
 +------------------------+------------+---------+------------------------+---------------+------------------------+------------+
+us33: List orphans
++------------+--------------+
+|     Id     |     Name     |
++------------+--------------+
+| US33_CHILD | child /us33/ |
++------------+--------------+
