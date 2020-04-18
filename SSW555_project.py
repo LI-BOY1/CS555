@@ -874,6 +874,79 @@ def us25(personList, familyList):
 
 ###############################################
 #                                             #
+#                 US 35                       #
+#                 author boyang li            #
+#                                             #
+###############################################
+
+def us35(personList):
+    pplTable = PrettyTable(['Id', 'Child', 'Spouse', 'Name', 'Gender', 'BirthDate', 'death', 'alive', 'Age'])
+
+    for p in personList:
+        bdate = p.birthDate
+        try:
+            currentTime = datetime.datetime.now()
+            datetime_object = datetime.datetime.strptime(bdate, '%d %b %Y')
+            diff = currentTime - datetime_object
+
+            if diff.days <= 30 and diff.days >= 0:
+                list = []
+                attrs = vars(p)
+                for item in attrs.items():
+                    list.append(item[1])
+                pplTable.add_row(list)
+
+                res = "US35: here is the list of persons who was born in the last 30 days"
+                write_file_and_print(sprint_output, res)
+                tableContent = pplTable.get_string();
+                write_file_and_print(sprint_output, tableContent)
+
+        except ValueError:
+            print()
+
+
+
+
+###############################################
+#                                             #
+#                 US 36                       #
+#                 author boyang li            #
+#                                             #
+###############################################
+def us36(personList):
+    pplTable = PrettyTable(['Id', 'Child', 'Spouse', 'Name', 'Gender', 'BirthDate', 'death', 'alive', 'Age'])
+
+    for p in personList:
+        if not p.alive:
+            try:
+                death_date = p.death
+                currentTime = datetime.datetime.now()
+                datetime_object = datetime.datetime.strptime(death_date, '%d %b %Y')
+                diff = currentTime - datetime_object
+                if diff.days <= 30 and diff.days >= 0:
+                    list = []
+                    attrs = vars(p)
+                    for item in attrs.items():
+                        list.append(item[1])
+                    pplTable.add_row(list)
+
+                    res = "US36: here is the list of persons who died in the last 30 days"
+                    write_file_and_print(sprint_output, res)
+                    tableContent = pplTable.get_string();
+                    write_file_and_print(sprint_output, tableContent)
+
+            except ValueError:
+                print()
+
+
+
+
+
+
+
+
+###############################################
+#                                             #
 #                 US 21                       #
 #                 author @zw                  #
 #                                             #
@@ -1067,8 +1140,10 @@ def us34(personList, familyList):
             write_file_and_print(sprint_output, res)
             checkTable.add_row([family.id, family.married, marry_date - birth_date_m, marry_date - birth_date_f])
             verify = False
-    print("us34: Couples who were married when the older spouse was more than twice as old as the younger spouse")
-    print(checkTable)
+    res = "us34: Couples who were married when the older spouse was more than twice as old as the younger spouse"
+    write_file_and_print(sprint_output, res);
+    table_content = checkTable.get_string()
+    write_file_and_print(sprint_output, table_content)
     if verify:
         return "No couples who were married when the older spouse was more than twice as old as the younger spouse"
     else:
@@ -1329,7 +1404,8 @@ def main():
     us38(personList)
     us39(personList, familyList)
     us33(personList, familyList)
-
+    us35(personList)
+    us36(personList)
 
 if __name__ == '__main__':
     main()

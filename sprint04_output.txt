@@ -20,6 +20,8 @@
 |       US33_CHILD       |          ['US33']          |                          []                          |     child /us33/     |   F    |  1 JAN 2011 |     N/A     |  True |  9  |
 |        US33_HUS        |          ['US33']          |                          []                          |      hus /us33/      |   M    |  1 JAN 1975 |  1 JAN 2015 | False |  45 |
 |       US33_WIFE        |          ['US33']          |                          []                          |     wife /us33/      |   F    |  1 JAN 1975 |  1 JAN 2015 | False |  45 |
+|          US35          |             []             |                          []                          |     US35 /us35/      |   M    | 10 APR 2020 |     N/A     |  True |  0  |
+|          US36          |             []             |                          []                          |     US36 /us36/      |   F    |  1 APR 2000 | 14 APR 2020 | False |  20 |
 |          US41          |             []             |                          []                          |     US41 /us41/      |   F    |   JAN 1975  |     2015    | False |  45 |
 |           c2           |             []             |                          []                          |     c2 /Joestar/     |   F    |  1 JAN 1985 |     N/A     |  True |  35 |
 |           c3           |             []             |                          []                          |     c3 /Joestar/     |   F    |  1 JAN 1984 |     N/A     |  True |  36 |
@@ -91,6 +93,7 @@ us29: Deceased Individuals
 | @I6000000121264684821@ |     Some /One/    |  1 JAN 1912 | 32 JAN 1939 |
 |        US33_HUS        |     hus /us33/    |  1 JAN 1975 |  1 JAN 2015 |
 |       US33_WIFE        |    wife /us33/    |  1 JAN 1975 |  1 JAN 2015 |
+|          US36          |    US36 /us36/    |  1 APR 2000 | 14 APR 2020 |
 |          US41          |    US41 /us41/    |   JAN 1975  |     2015    |
 +------------------------+-------------------+-------------+-------------+
 us30: List living married
@@ -122,6 +125,15 @@ ERROR: FAMILY: US34: In family @F6000000121260219857@, husband was more than twi
 ERROR: FAMILY: US34: In family @F6000000121265269827@, wife was more than twice as old as the husband when they are married.
 ERROR: FAMILY: US34: In family test_fam, husband was more than twice as old as the wife when they are married.
 ERROR: FAMILY: US34: In family test_fam, wife was more than twice as old as the husband when they are married.
+us34: Couples who were married when the older spouse was more than twice as old as the younger spouse
++------------------------+------------+------------------------------+---------------------------+
+|           ID           |  married   | age when husband was married | age when wife was married |
++------------------------+------------+------------------------------+---------------------------+
+| @F6000000121260219857@ | 1 MAY 1991 |              -9              |            -31            |
+| @F6000000121265269827@ | 1 JAN 1982 |              62              |            182            |
+|        test_fam        | 1 JAN 1937 |             -47              |            -48            |
+|        test_fam        | 1 JAN 1937 |             -47              |            -48            |
++------------------------+------------+------------------------------+---------------------------+
 ERROR: FAMILY: US42: @I6000000121264684821@ died at 32 JAN 1939, which is not legitimate.
 ERROR: INDIVIDUAL: US42: US41 was born at JAN 1975, which is not legitimate.
 ERROR: FAMILY: US42: US41 died at 2015, which is not legitimate.
@@ -143,3 +155,15 @@ us33: List orphans
 +------------+--------------+
 | US33_CHILD | child /us33/ |
 +------------+--------------+
+US35: here is the list of persons who was born in the last 30 days
++------+-------+--------+-------------+--------+-------------+-------+-------+-----+
+|  Id  | Child | Spouse |     Name    | Gender |  BirthDate  | death | alive | Age |
++------+-------+--------+-------------+--------+-------------+-------+-------+-----+
+| US35 |   []  |   []   | US35 /us35/ |   M    | 10 APR 2020 |  N/A  |  True |  0  |
++------+-------+--------+-------------+--------+-------------+-------+-------+-----+
+US36: here is the list of persons who died in the last 30 days
++------+-------+--------+-------------+--------+------------+-------------+-------+-----+
+|  Id  | Child | Spouse |     Name    | Gender | BirthDate  |    death    | alive | Age |
++------+-------+--------+-------------+--------+------------+-------------+-------+-----+
+| US36 |   []  |   []   | US36 /us36/ |   F    | 1 APR 2000 | 14 APR 2020 | False |  20 |
++------+-------+--------+-------------+--------+------------+-------------+-------+-----+
