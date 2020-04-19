@@ -15,6 +15,7 @@
 | @I6000000121263691956@ | ['@F6000000121265269827@'] |                          []                          | Josuke /Higashikata/ |   M    |  1 JAN 1983 |     N/A     |  True |  37 |
 | @I6000000121264684821@ |             []             |              ['@F6000000121263361884@']              |      Some /One/      |   M    |  1 JAN 1912 | 32 JAN 1939 | False | 108 |
 | @I6000000121265269823@ |             []             |              ['@F6000000121265269827@']              | Tomoko /Higashikata/ |   F    |  1 JAN 1800 |     N/A     |  True | 220 |
+|          US03          |             []             |                          []                          |     US03 /us03/      |   F    |  1 APR 1991 | 14 APR 1990 | False |  29 |
 |         US25C          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   M    |  1 JAN 2019 |     N/A     |  True |  1  |
 |         US25D          |           ['f5']           |                          []                          |    Maryl /Zhang/     |   F    |  1 JAN 2019 |     N/A     |  True |  1  |
 |       US33_CHILD       |          ['US33']          |                          []                          |     child /us33/     |   F    |  1 JAN 2011 |     N/A     |  True |  9  |
@@ -53,6 +54,10 @@ ERROR: FAMILY: US02: @F6000000121260219857@ Husband's birth date 2000-02-13 foll
 ERROR: FAMILY: US02: @F6000000121260219857@ Wife's birth date 2022-03-24 following marriage date 1991-05-01
 ERROR: FAMILY: US02: test_fam Wife's birth date 1985-01-01 following marriage date 1937-01-01
 ERROR: FAMILY: US02: test_fam Husband's birth date 1984-01-01 following marriage date 1937-01-01
+ERROR: INDIVIDUAL: US03: US03 Died 1990-04-14 before born 1991-04-01
+ERROR: FAMILY: US04: marriage date 1990-01-01 for family @F6000000121263060827@ is not before divorce date 1980-01-01
+ERROR: FAMILY: US05: marriage date 1990-01-01 for family @F6000000121263060827@ is not before death date 1930-01-01 for person @I6000000121263078869@
+ERROR: FAMILY: US05: marriage date 1937-01-01 for family @F6000000121263361884@ is not before death date 1930-01-01 for person @I6000000121263078869@
 ERROR: FAMILY: US06: @F6000000121263060827@: Divorced 1980-01-01 after wife's (@I6000000121263078869@) death on 1930-01-01
 ERROR: INDIVIDUAL: US07: @I6000000121265269823@: more than 150 years old
 ERROR: INDIVIDUAL: US08: @I6000000121262569821@: birth before marriage
@@ -91,6 +96,7 @@ us29: Deceased Individuals
 | @I6000000121263078869@ |  Suzi Q /Joestar/ |  1 JAN 1921 |  1 JAN 1930 |
 | @I6000000121263361878@ | Shizuka /Joestar/ |  1 JAN 1938 |  1 JAN 1998 |
 | @I6000000121264684821@ |     Some /One/    |  1 JAN 1912 | 32 JAN 1939 |
+|          US03          |    US03 /us03/    |  1 APR 1991 | 14 APR 1990 |
 |        US33_HUS        |     hus /us33/    |  1 JAN 1975 |  1 JAN 2015 |
 |       US33_WIFE        |    wife /us33/    |  1 JAN 1975 |  1 JAN 2015 |
 |          US36          |    US36 /us36/    |  1 APR 2000 | 14 APR 2020 |
@@ -167,15 +173,3 @@ US36: here is the list of persons who died in the last 30 days
 +------+-------+--------+-------------+--------+------------+-------------+-------+-----+
 | US36 |   []  |   []   | US36 /us36/ |   F    | 1 APR 2000 | 14 APR 2020 | False |  20 |
 +------+-------+--------+-------------+--------+------------+-------------+-------+-----+
-US35: here is the list of persons who was born in the last 30 days
-+----+----------+--------+------------+--------+-----------+-------+-------+-----+
-| Id |  Child   | Spouse |    Name    | Gender | BirthDate | death | alive | Age |
-+----+----------+--------+------------+--------+-----------+-------+-------+-----+
-| d1 | Jack Sue |   M    | 1 APR 2020 |   0    |    True   |  N/A  |   []  |  [] |
-+----+----------+--------+------------+--------+-----------+-------+-------+-----+
-US36: here is the list of persons who died in the last 30 days
-+----+----------+--------+------------+--------+-----------+-------------+-------+-----+
-| Id |  Child   | Spouse |    Name    | Gender | BirthDate |    death    | alive | Age |
-+----+----------+--------+------------+--------+-----------+-------------+-------+-----+
-| d2 | Rose Sue |   F    | 1 JAN 1987 |   33   |   False   | 16 APR 2020 |   []  |  [] |
-+----+----------+--------+------------+--------+-----------+-------------+-------+-----+

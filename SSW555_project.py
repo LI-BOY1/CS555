@@ -329,11 +329,14 @@ def us03(personList):
         if p.death == "N/A":
             continue
 
-        if compare_date(p.birthDate, p.death) == 1:
-            error += 1
-            res = "ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(str_to_date(p.birthDate))
-            write_file_and_print(sprint_output, res)
- 
+        try:
+            if compare_date(p.birthDate, p.death) == 1:
+                error += 1
+                res = "ERROR: INDIVIDUAL: US03: " + p.id + " Died " + str(str_to_date(p.death)) + " before born " + str(str_to_date(p.birthDate))
+                write_file_and_print(sprint_output, res)
+        except ValueError:
+            pass
+
     return error
 
 
@@ -375,17 +378,21 @@ def us0405(familyList, personList):
             continue
 
         # this person is dead and has spouse, then check if their marry date is before his/her death date
-        deathDate = datetime.datetime.strptime(p.death, '%d %b %Y').strftime("%Y-%m-%d")
 
-        for f in familyList:
-            if f.husbandID == p.id or f.wifeID == p.id:
-                marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
-                if deathDate < marrydate:
-                    with open(sprint_output, 'a') as file:
-                        res = "ERROR: FAMILY: US05: marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
-                        print(res)
-                        file.write(res)
-                        file.write('\n')
+        try:
+            deathDate = datetime.datetime.strptime(p.death, '%d %b %Y').strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+        else:
+            for f in familyList:
+                if f.husbandID == p.id or f.wifeID == p.id:
+                    marrydate = datetime.datetime.strptime(f.married, '%d %b %Y').strftime("%Y-%m-%d")
+                    if deathDate < marrydate:
+                        with open(sprint_output, 'a') as file:
+                            res = "ERROR: FAMILY: US05: marriage date " + marrydate + " for family " + f.id + " is not before death date " + deathDate + " for person " + p.id
+                            print(res)
+                            file.write(res)
+                            file.write('\n')
 
 ###############################################
 #                                             #
@@ -1374,8 +1381,8 @@ def main():
     # sprint1
     us01(personList, familyList)
     us02(personList, familyList)
-    # us03(personList)
-    # us0405(familyList, personList)
+    us03(personList)
+    us0405(familyList, personList)
     us06(personList, familyList)
     us07(personList, familyList)
     us08(personList, familyList)
